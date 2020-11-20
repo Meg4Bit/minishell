@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 01:49:45 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/20 02:41:47 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/11/20 12:45:58 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_pwd(char **dir)
 
 	if (ft_arrlen(dir) == 1)
 	{
-	   	if (!(wdir = getcwd((char *)NULL, 0)))
+		if (!(wdir = getcwd((char *)NULL, 0)))
 			pwd_err(dir[0]);
 		else
 		{
@@ -104,7 +104,7 @@ void	ft_pwd(char **dir)
 	}
 	else
 	{
-	   	ft_putstr_fd("pwd: ", 1);
+		ft_putstr_fd("pwd: ", 1);
 		ft_putstr_fd("too many aguments", 1);
 	}
 	ft_putstr_fd("\n", 1);

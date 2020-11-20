@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/20 11:00:58 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/11/21 00:26:25 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ typedef struct	s_fd
 	int				fd;
 	struct s_list	*next;
 }				t_fd;
+
+void	execute_command(char *line);
 
 #endif

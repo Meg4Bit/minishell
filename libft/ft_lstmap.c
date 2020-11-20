@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 19:09:36 by student           #+#    #+#             */
-/*   Updated: 2020/10/02 01:17:19 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/11/21 00:24:12 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	newlst = NULL;
 	while (lst)
 	{
-		tmp = ft_lstnew(f(lst->content), 0);
+		tmp = ft_lstnew(f(lst->content));
 		if (!tmp)
 		{
 			ft_lstclear(&newlst, del);
