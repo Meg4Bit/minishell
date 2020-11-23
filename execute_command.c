@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/21 00:27:15 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/11/21 15:36:58 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,32 @@ int		free_str(char *tmp)
 	return (0);
 }
 
+int		add_data_list(t_list **commands, char *start, int len)
+{
+	t_list	*add;
+	char	*tmp;
+
+	if (!(tmp = ft_substr(start, 0, len)))
+		return (0);
+	if (!(add = ft_lstnew(tmp)))
+		return (free_str(tmp));
+	ft_lstadd_back(commands, add);
+	return (1);
+}
+
+void	skip_quotes(char *line, int *i)
+{
+	if (line[*i] == '"')
+		while (line[++*i] != '"' && line[*i])
+			;
+	if (line[*i] == '\'')
+		while (line[++*i] != '\'' && line[*i])
+			;
+}
+
 t_list	*list_parser(char *line)
 {
 	t_list	*commands;
-	t_list	*add;
-	char	*tmp;
 	char	*start;
 	int		i;
 
@@ -32,31 +53,19 @@ t_list	*list_parser(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '"')
-			while (line[++i] != '"' && line[i]);
-		if (line[i] == '\'')
-			while (line[++i] != '\'' && line[i]);
+		skip_quotes(line, &i);
 		if (line[i] == ';' || line[i] == '|')
 		{
-			if (!(tmp = ft_substr(start, 0, &line[i] - start)))
+			if (!add_data_list(&commands, start, &line[i] - start))
 				return (0);
-			if (!(add = ft_lstnew(tmp)))
-				return (free_str(tmp));
-			ft_lstadd_back(&commands, add);
 			start = &line[i];
-			if (!(tmp = ft_substr(start++, 0, 1)))
+			if (!add_data_list(&commands, start++, 1))
 				return (0);
-			if (!(add = ft_lstnew(tmp)))
-				return (free_str(tmp));
-			ft_lstadd_back(&commands, add);
 		}
 		i++;
 	}
-	if (!(tmp = ft_strdup(start)))
+	if (!add_data_list(&commands, start, (int)ft_strlen(start)))
 		return (0);
-	if (!(add = ft_lstnew(tmp)))
-		return (free_str(tmp));
-	ft_lstadd_back(&commands, add);
 	return (commands);
 }
 

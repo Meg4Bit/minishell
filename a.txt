@@ -1,0 +1,7 @@
+a.txt
+execute_command.c
+ft_echo.c
+ft_pwd.c
+libft
+main.c
+minishell.h
