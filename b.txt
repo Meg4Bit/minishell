@@ -1,3 +1,0 @@
-ft_echo.c
-ft_pwd.c
-libft

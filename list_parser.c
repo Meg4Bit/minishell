@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_command.c                                  :+:      :+:    :+:   */
+/*   list_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/21 15:36:58 by ametapod         ###   ########.fr       */
+/*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
+/*   Updated: 2020/11/26 17:49:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		free_str(char *tmp)
+int		free_str(void *tmp)
 {
 	if (tmp)
 		free(tmp);
@@ -67,12 +67,4 @@ t_list	*list_parser(char *line)
 	if (!add_data_list(&commands, start, (int)ft_strlen(start)))
 		return (0);
 	return (commands);
-}
-
-void	execute_command(char *line)
-{
-	t_list	*cl;
-
-	cl = list_parser(line);
-	ft_lstiter(cl, ft_putstr_fd);
 }
