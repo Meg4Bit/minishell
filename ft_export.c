@@ -10,145 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-
-size_t	ft_strlen(const char *str)
-{
-	size_t len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	if (str)
-		write(fd, str, ft_strlen(str));
-}
-
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
-{
-	size_t			i;
-	unsigned char	*ptr1;
-	unsigned char	*ptr2;
-
-	ptr1 = (unsigned char *)s1;
-	ptr2 = (unsigned char *)s2;
-	i = 0;
-	if ((!s1 && !s2) || n == 0)
-		return (0);
-	while (n--)
-	{
-		if (ptr1[i] != ptr2[i])
-			return (ptr1[i] - ptr2[i]);
-		i++;
-	}
-	return (0);
-}
-
-void		*ft_memset(void *s, int c, size_t n)
-{
-	size_t			i;
-	unsigned char	*ptr;
-	unsigned char	sym;
-
-	ptr = (unsigned char *)s;
-	sym = (unsigned char)c;
-	i = 0;
-	while (i < n)
-	{
-		ptr[i] = sym;
-		i++;
-	}
-	return (ptr);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	if (!(str = (char *)malloc(sizeof(char) *\
-	(ft_strlen(s1) + ft_strlen(s2)) + 1)))
-		return (NULL);
-	while (*s1)
-		str[i++] = *s1++;
-	while (*s2)
-		str[i++] = *s2++;
-	str[i] = '\0';
-	return (str);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
-}
-
-void		ft_sfree(void *ptr)
-{
-	char	*str;
-
-	if (ptr)
-	{
-		ft_bzero(ptr, ft_strlen(ptr));
-		str = (char *)ptr;
-		free(str);
-		str = 0;
-	}
-}
-
-typedef struct		s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
-t_list	*ft_lstlast(t_list *lst)
-{
-	while (lst && lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list *ptr;
-
-	if (!*lst)
-		*lst = new;
-	else
-	{
-		ptr = ft_lstlast(*lst);
-		ptr->next = new;
-	}
-}
-
-t_list	*ft_lstnew(void *content)
-{
-	t_list *list;
-
-	if (!(list = malloc(sizeof(t_list))))
-		return (NULL);
-	list->content = content;
-	list->next = NULL;
-	return (list);
-}
-
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	while (lst)
-	{
-		(*f)(lst->content);
-		lst = lst->next;
-	}
-}
+#include "minishell.h"
 
 t_list	*ft_lstfind(t_list *start, void *data, int (*func)())
 {
@@ -179,51 +41,6 @@ void	ft_lstsort(t_list **env_sorted, void *data, int (*func)())
 	}
 }
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
-{
-	t_list *list;
-
-	list = *lst;
-	while (list)
-	{
-		del(list->content);
-		free(list);
-		list = list->next;
-	}
-	*lst = NULL;
-}
-
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == c)
-			return ((char*)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char*)s);
-	return (0);
-}
-
-char	*ft_strdup(const char *s)
-{
-	size_t	i;
-	char	*ptr;
-
-	i = 0;
-	if (!(ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1)))
-		exit(1);
-	while (s[i])
-	{
-		ptr[i] = s[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -232,21 +49,6 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
-}
-
-int		ft_isalpha(int c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
-int		ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int		ft_isalnum(int c)
-{
-	return (ft_isalpha(c) || ft_isdigit(c));
 }
 
 char		*ft_strndup(const char *s, int n)
@@ -270,18 +72,6 @@ char		*ft_strndup(const char *s, int n)
 	return (ptr);
 }
 
-int		ft_arrlen(char **arr)
-{
-	int len;
-
-	len = 0;
-	while (arr[len])
-	{
-		len++;
-	}
-	return (len);
-}
-
 void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *))
 {
 	int i;
@@ -300,28 +90,6 @@ void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *))
 void	ft_pass(void *p)
 {
 	(void)p;
-}
-
-t_list		*get_env(char **env)
-{
-	int		i;
-	t_list	*start;
-	t_list	*new;
-	char	*str;
-
-	if (!env || !*env)
-		exit(1);
-	start = 0;
-	i = -1;
-	while (env[++i])
-	{
-		if (!(str = ft_strdup(env[i])))
-			exit(1);
-		if (!(new = ft_lstnew(str)))
-			exit(1);
-		ft_lstadd_back(&start, new);
-	}
-	return (start);
 }
 
 int			var_checker(char *s1, char *s2)
@@ -393,7 +161,7 @@ static void		var_mod(t_list *list, char *value)
 	if ((p = ft_strchr(list->content, '=')))
 		p[1] = '\0';
 	var_env = ft_strjoin(list->content, value);
-	ft_sfree(list->content);
+	free_str(list->content);
 	list->content = var_env;
 }
 
@@ -429,8 +197,8 @@ static void		var_handler(char *str, t_list *env_var)
 		key = ft_strndup(str, (ptr - str) + 1);
 		value = ft_strndup(ptr + 1, ft_strlen(ptr + 1));
 		ft_set(key, value, env_var);
-		ft_sfree(key);
-		ft_sfree(value);
+		free_str(key);
+		free_str(value);
 	}
 }
 
@@ -457,12 +225,10 @@ static void		put_export(void *content)
 		ft_putstr_fd("\n", 1);
 	}
 	else
+	{
 		ft_putstr_fd((char *)content, 1);
-}
-
-void	ft_env(t_list	*env_var)
-{
-	ft_lstiter(env_var, put_env);
+		ft_putstr_fd("\n", 1);
+	}
 }
 
 static t_list 	*var_sort(t_list *env_var)
@@ -493,19 +259,4 @@ void	ft_export(char **var, t_list *env_var)
 	}
 	else
 		ft_arriter(var + 1, env_var, &var_handler);
-}
-
-int		main(int ac, char **av, char **env)
-{
-	t_list	*env_var;
-
-	char *tmp[] = {"test=", "ii=", "d", NULL};
-
-	char **data = tmp;
-
-	env_var = get_env(env);
-	ft_set("test=", "test", env_var);
-	ft_export(data, env_var);
-	//ft_env(env_var);
-	return (0);
 }

@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:01:38 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/19 02:35:23 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:08:26 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-size_t	ft_strlen(const char *str)
-{
-	size_t len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	if (str)
-		write(fd, str, ft_strlen(str));
-}
+#include "minishell.h"
 
 static int	arg_checker(char **line)
 {
@@ -70,9 +54,4 @@ int		ft_echo(char **line)
 	if (flag == 1)
 		ft_putstr_fd("\n", 1);
 	return (0);
-}
-
-int main(int ac, char **av)
-{
-	ft_echo(av);
 }

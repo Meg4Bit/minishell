@@ -6,11 +6,22 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/26 18:28:29 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/11/30 19:08:09 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		error_msg(char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	if (errno)
+		perror(msg);
+	else
+		ft_putstr_fd(msg, 2);
+	return (0);
+}
+
 
 int		argv_len(char *str)
 {
@@ -35,10 +46,13 @@ int		argv_len(char *str)
 
 static void	*free_arr(char **arr)
 {
+	int		i;
+
+	i = 0;
 	if (arr)
 	{
-		while (*arr)
-			free(*arr++);
+		while (arr[i])
+			free(arr[i++]);
 		free(arr);
 	}
 	return (0);
@@ -77,7 +91,7 @@ char	**exe_parser(char *str)
 	char	**argv;
 
 	if (!(str = ft_strtrim(str, " ")))
-		return ;
+		return (NULL);
 	if (!(argv = (char **)malloc(sizeof(char *) * (argv_len(str) + 1))))
 		return free_str(str);
 	if (!create_arr(argv, str))
@@ -89,7 +103,39 @@ char	**exe_parser(char *str)
 	return (argv);
 }
 
-void	command_line(char *line)
+int		func_checker(char **argv, t_list *env_var)
+{
+	// ft_pwd(argv);
+	// else
+	// {
+	// 	if (execve(name_prog, argv, NULL) == -1)
+	// 		ft_putnbr_fd(1, 1);
+	// }
+	t_sfunc	*funct;
+	int		i;
+
+	i = 0;
+	funct = (t_sfunc []){
+		(t_sfunc){"pwd", ft_pwd},
+		(t_sfunc){"echo", ft_echo},
+		(t_sfunc){"env", ft_env},
+		(t_sfunc){"export", ft_export},
+		(t_sfunc){"unset", ft_unset},
+		(t_sfunc){"cd", ft_cd},
+		(t_sfunc){"exit", ft_exit},
+		(t_sfunc){NULL, NULL},
+	};
+	while (funct[i].key)
+	{
+		if (!ft_strncmp(funct[i].key, argv[0], ft_strlen(argv[0])))
+		{
+			funct[i].value(argv, env_var);
+		}
+		i++;
+	}
+}
+
+void	command_line(char *line, t_list *env_var)
 {
 	t_list	*cl;
 	t_list	*start;
@@ -105,36 +151,65 @@ void	command_line(char *line)
 	fd0 = dup(fd[0]);
 	cl = list_parser(line);
 	start = cl;
-	char	*argv[] = {"ls", NULL};
+	int		opened = 0;
 	while (cl)
 	{
 		char	*name_prog;
 		char	**argv;
-		dup2(fd1, 1);
 		if (!(argv = exe_parser((char *)cl->content)))
-			;
+			return (error_msg("malloc"));
 		if (!(name_prog = ft_strjoin("/usr/bin/", argv[0])))
-			;
+		{
+			free_arr(argv);
+			//return (error_msg("malloc"));
+		}
+		if (opened)
+			close(pip[0]);
 		if (cl->next && *(char *)(cl->next->content) == '|')
 		{
 			if (pipe(pip) == -1)
 				;
-			if ((fd[0] = dup2(pip[0], fd[0])) == -1)
-				;
-			if ((fd[1] = dup2(pip[1], fd[1])) == -1)
-				;
+			fd[1] = pip[1];
+			opened = 1;
+		}
+		else
+		{
+			fd[1] = dup2(fd1, 1);
+			opened = 0;
+		}
+		dup2(fd[1], 1);
+		dup2(fd[0], 0);
+		// if (name_prog == func)
+		// 	name_prog;
+		// else
+		if ((pid = fork()) == -1)
+			;
+		//ft_putstr_fd((char *)cl->content, 1);
+		if (pid > 0)
+		{
+			wait(NULL);
+		}
+		if (pid == 0)
+		{
+			func_checker(argv, env_var);
+		}
+		dup2(fd1, 1);
+		ft_putnbr_fd(pip[0], 1);
+		free_str(name_prog);
+		free_arr(argv);
+		if (cl->next && *(char *)(cl->next->content) == '|')
+		{
+			close(pip[1]);
+			fd[0] = pip[0];
 			cl = cl->next;
 			//if (!cl->next)
 		}
-		if ((pid = fork()) == -1)
-			;
-		if (pid == 0)
-			if (execve(name_prog, argv, NULL) == -1)
-				;
-		wait(NULL);
+		else
+			fd[0] = dup2(fd0, 0);
 		cl = cl->next;
 	}
-	dup2(fd0, 0);
+	close(fd0);
+	close(fd1);
 	//ft_lstiter(cl, ft_putstr_fd);
 	ft_lstclear(&start, (void *)free_str);
 }
