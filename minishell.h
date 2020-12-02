@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/30 19:01:17 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/01 18:08:31 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	ft_unset(char **var, t_list *env_var);
 void	ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
 void	ft_exit(char **var);
+int		func_checker(char **argv, t_list *env_var);
 
 #endif

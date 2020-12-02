@@ -10,7 +10,8 @@ SRC =   main.c\
 		ft_export.c\
 		ft_unset.c\
 		ft_cd.c\
-		ft_exit.c
+		ft_exit.c\
+		func_checker.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
 
