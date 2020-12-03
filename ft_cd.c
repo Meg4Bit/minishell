@@ -120,18 +120,6 @@ static char		*path_get(char *path, t_list *env_var)
 	return (str);
 }
 
-static void		put_env(void *content)
-{
-	char		*env_var;
-
-	env_var = (char *)content;
-	if (ft_strchr(env_var, '='))
-	{
-		ft_putstr_fd(env_var, 1);
-		ft_putstr_fd("\n", 1);
-	}
-}
-
 static void			ft_cderr(char *path)
 {
 	char			*str;
@@ -169,7 +157,7 @@ static	void	pwd_change(char *path, t_list *env_var)
 	}
 }
 
-void		ft_cd(char **var, t_list *env_var)
+int		ft_cd(char **var, t_list *env_var)
 {
 	int		len;
 	char	*path;
@@ -178,7 +166,7 @@ void		ft_cd(char **var, t_list *env_var)
 	if (len > 2)
 	{
 		ft_stderr("cd:", " ", "too many argument\n");
-		exit(1);
+		return (0);
 	}
 
 	else

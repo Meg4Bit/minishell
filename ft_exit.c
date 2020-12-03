@@ -1,47 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ exit.c                                         :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/30 19:03:34 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/03 16:56:28 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		put_env(void *content)
+static int		exit_checker(char *ar)
 {
-	char		*env_var;
-
-	env_var = (char *)content;
-	if (ft_strchr(env_var, '='))
+	while (*ar)
 	{
-		ft_putstr_fd(env_var, 1);
-		ft_putstr_fd("\n", 1);
+		if (*ar == '-' || *ar == '+')
+			ar++;
+		if (!ft_isdigit(*ar))
+			return (0);
+		ar++;
 	}
+	return (1);
+}
+
+static int		ft_exiterr(char **var)
+{
+	ft_stderr("exit: ", var[1], ": numeric argument required\n");
+	return (255);
 }
 
 void		ft_exit(char **var)
 {
 	int		i;
 
+	i = 0;
 	if (var[1])
 	{
-		// if (exit_checker(var[1]) == -1)
-		// 	i = ft_exiterr(var);
-		// else
-		// {
-		// 	i = ft_atoi(var[1]);
-		// 	i = i % 256;
-		// 	if (i <= 0 && ft_strlen(var[1]) > 14)
-		// 	{
-		// 		i = ft_exiterr(var);
-		// 	}
-		// }
-		;
+		ft_putstr_fd("###\n", 1);
+		if (!exit_checker(var[1]))
+			i = ft_exiterr(var);
+		else
+		{
+			i = ft_atoi(var[1]);
+			i = i % 256;
+			if (i <= 0 && ft_strlen(var[1]) > 14)
+				i = ft_exiterr(var);
+		 }
 	}
-	exit(0);
+	exit(i);
 }

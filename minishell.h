@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/01 18:08:31 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/03 15:20:37 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_fd
 typedef struct	s_sfunc
 {
 	char		*key;
-	void		(*value)();
+	int			(*value)();
 }				t_sfunc;
 
 void	command_line(char *line, t_list *env_var);
@@ -50,9 +50,13 @@ t_list	*ft_lstfind(t_list *start, void *data, int (*func)());
 void	ft_set(char *key, char *value, t_list *env_var);
 int		var_checker(char *s1, char *s2);
 void	ft_unset(char **var, t_list *env_var);
-void	ft_cd(char **var, t_list *env_var);
+int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
 void	ft_exit(char **var);
 int		func_checker(char **argv, t_list *env_var);
+void	put_env(void *content);
+void	slash_handler();
+void	child_slash_handler();
+void	c_handler();
 
 #endif

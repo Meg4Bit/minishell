@@ -202,18 +202,6 @@ static void		var_handler(char *str, t_list *env_var)
 	}
 }
 
-static void		put_env(void *content)
-{
-	char		*env_var;
-
-	env_var = (char *)content;
-	if (ft_strchr(env_var, '='))
-	{
-		ft_putstr_fd(env_var, 1);
-		ft_putstr_fd("\n", 1);
-	}
-}
-
 static void		put_export(void *content)
 {
 	ft_putstr_fd("declare -x ", 1);

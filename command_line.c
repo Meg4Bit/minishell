@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/01 19:49:41 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/03 15:12:21 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 		}
 		dup2(fd[1], 1);
 		dup2(fd[0], 0);
-		if (!func_checker(argv, env_var))
+		int res;
+		signal(SIGQUIT, child_slash_handler);
+		if (!(res = func_checker(argv, env_var)))
 		{
 			if ((pid = fork()) == -1)
 				;
@@ -149,6 +151,8 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 		ft_putnbr_fd(pip[0], 1);
 		free_str(name_prog);
 		free_arr(argv);
+		if (res == -1)
+			return (0);
 		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
 		{
 			close(pip[1]);

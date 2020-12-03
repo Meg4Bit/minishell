@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/30 18:21:01 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:22:36 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list		*get_env(char **env)
 	return (start);
 }
 
-static void		put_env(void *content)
+void	put_env(void *content)
 {
 	char		*env_var;
 
