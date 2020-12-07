@@ -92,24 +92,7 @@ void	ft_pass(void *p)
 	(void)p;
 }
 
-int			var_checker(char *s1, char *s2)
-{
-	int		len;
 
-	len = 0;
-	if(!s2[len])
-		return (1);
-	while (s1[len] && s1[len] != '=')
-	{
-		len++;
-	}
-	len = ft_memcmp(s1, s2, len);
-	if (len == 0)
-	{
-		return (0);
-	}
-	return (1);
-}
 
 void	ft_stderr(char *func, char *arg, char *err)
 {

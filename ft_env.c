@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/03 13:22:36 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 01:11:59 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	put_env(void *content)
 	}
 }
 
-void	ft_env(char ** argv, t_list *env_var)
+int	ft_env(char ** argv, t_list *env_var)
 {
 	argv = NULL;
 	ft_lstiter(env_var, put_env);
+	return (1);
 }

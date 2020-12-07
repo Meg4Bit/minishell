@@ -26,21 +26,6 @@ int		ft_diff(char *s1, char *s2)
 	return ((s2[i] == '=' || !s2[i]) ? 0 : 1);
 }
 
-static void		var_add(char *key, char *value, t_list *env_var)
-{
-	char		*var;
-	t_list		*list;
-
-	var = ft_strjoin(key, value);
-	list = ft_lstnew(var);
-	if (!list)
-	{
-		free(var);
-		exit(1);
-	}
-	ft_lstadd_back(&env_var, list);
-}
-
  void		ft_lstrm(t_list **env_var, t_list *rm, void (*func)(void *))
  {
  	t_list	*tmp;
@@ -59,18 +44,6 @@ static void		var_add(char *key, char *value, t_list *env_var)
  			ft_lstrm(&(*env_var)->next, rm, func);
  	}
  }
-
-static void		var_mod(t_list *list, char *value)
-{
-	char		*p;
-	char		*var_env;
-
-	if ((p = ft_strchr(list->content, '=')))
-		p[1] = '\0';
-	var_env = ft_strjoin(list->content, value);
-	free_str(list->content);
-	list->content = var_env;
-}
 
 static void	unset_err(char *str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:01:38 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/30 17:08:26 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 01:13:47 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ int		ft_echo(char **line)
 	}
 	if (flag == 1)
 		ft_putstr_fd("\n", 1);
-	return (0);
+	return (1);
 }

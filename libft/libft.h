@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:17:21 by student           #+#    #+#             */
-/*   Updated: 2020/11/21 00:22:57 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 01:07:47 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void			ft_lstiter(t_list *lst, void (*f)(void *, int));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),\
 													void (*del)(void *));
 int				get_next_line(int fd, char **line);
+char			**ft_lsttoarr(t_list *env_var);
 
 #endif

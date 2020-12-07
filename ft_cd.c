@@ -21,73 +21,6 @@ void	ft_arrfree(char **arr)
 	}
 }
 
-static void		var_add(char *key, char *value, t_list *env_var)
-{
-	char		*var;
-	t_list		*list;
-
-	var = ft_strjoin(key, value);
-	list = ft_lstnew(var);
-	if (!list)
-	{
-		free(var);
-		exit(1);
-	}
-	ft_lstadd_back(&env_var, list);
-}
-
-static void		var_mod(t_list *list, char *value)
-{
-	char		*p;
-	char		*var_env;
-
-	if ((p = ft_strchr(list->content, '=')))
-		p[1] = '\0';
-	var_env = ft_strjoin(list->content, value);
-	free_str(list->content);
-	list->content = var_env;
-}
-
-char		*var_get(char *key, t_list *env_var)
-{
-	char	*str;
-	int		len;
-
-	while (env_var)
-	{
-		len = ft_strlen(key);
-		str = (char *)env_var->content;
-		if (!ft_memcmp(key, str, len))
-		{
-			if (str[len] == '=')
-				return (str + (len + 1));
-		}
-		env_var = env_var->next;
-	}
-	return (0);
-}
-
-char		*var_copy(char *key, t_list *env_var)
-{
-	char	*value;
-	char	*copy;
-
-	if (env_var)
-	{
-		value = var_get(key, env_var);
-		if (!value)
-			return (0);
-		else
-		{
-			copy = ft_strdup(value);
-			if (!copy)
-				exit(1);
-		}
-		return (copy);
-	}
-	return (0);
-}
-
 static char		*path_checker(char *path, t_list *env_var)
 {
 	char			*str;
@@ -168,7 +101,6 @@ int		ft_cd(char **var, t_list *env_var)
 		ft_stderr("cd:", " ", "too many argument\n");
 		return (0);
 	}
-
 	else
 	{
 		path = path_get(var[1], env_var);

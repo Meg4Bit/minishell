@@ -32,9 +32,11 @@ bonus:
 
 clean:
 	/bin/rm -f *.o
+	make clean -C libft
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	make fclean -C libft
 
 re: fclean all
 

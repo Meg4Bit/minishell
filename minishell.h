@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/03 15:20:37 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 01:23:10 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,17 @@ t_list	*list_parser(char *line);
 int		add_data_list(t_list **commands, char *start, int len);
 void	ft_pwd(char **dir);
 int		ft_echo(char **line);
-void	ft_env(char ** argv, t_list *env_var);
+int		ft_env(char ** argv, t_list *env_var);
 void	ft_export(char **var, t_list *env_var);
 t_list	*get_env(char **env);
 int		ft_arrlen(char **arr);
 t_list	*ft_lstfind(t_list *start, void *data, int (*func)());
 void	ft_set(char *key, char *value, t_list *env_var);
 int		var_checker(char *s1, char *s2);
+void	var_add(char *key, char *value, t_list *env_var);
+void	var_mod(t_list *list, char *value);
+char	*var_get(char *key, t_list *env_var);
+char	*var_copy(char *key, t_list *env_var);
 void	ft_unset(char **var, t_list *env_var);
 int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
