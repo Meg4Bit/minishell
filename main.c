@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:19:42 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/03 15:29:55 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 11:21:57 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main(int argc, char **argv, char **env)
 		}
 		if (*line)
 		{
-			ft_putstr_fd(line, 1);
+			//ft_putstr_fd(line, 1);
 			command_line(line, env_var);
 		}
 		free(line);

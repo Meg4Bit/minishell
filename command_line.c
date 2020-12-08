@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/03 15:12:21 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:00:09 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,12 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 		free_arr(argv);
 		return (error_msg("malloc"));
 	}
-		if (fd[0] != 0)
-			close(fd[0]);
-		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
-		{
+		//if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
+		//{
 			if (pipe(pip) == -1)
 				;
 			fd[1] = pip[1];
-		}
-		else
-		{
-			fd[1] = dup2(fd_init[1], 1);
-		}
+		//}
 		dup2(fd[1], 1);
 		dup2(fd[0], 0);
 		int res;
@@ -147,24 +141,33 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 					;
 			}
 		}
+		if (fd[0] != 0)
+			close(fd[0]);
+		if (fd[1] != 1)
+			close(fd[1]);
 		dup2(fd_init[1], 1);
-		ft_putnbr_fd(pip[0], 1);
+		//ft_putnbr_fd(pip[0], 1);
 		free_str(name_prog);
 		free_arr(argv);
 		if (res == -1)
 			return (0);
-		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
+		if ((*cl)->next)
 		{
-			close(pip[1]);
-			fd[0] = pip[0];
 			(*cl) = (*cl)->next;
-			dup2(fd[0], 0);
-			//if (!cl->next)
+			if (*(char *)((*cl)->content) == '|')
+			{
+				fd[0] = pip[0];
+				if (!(*cl)->next)
+				{
+					close(fd[0]);
+					fd[0] = dup2(fd_init[0], 0);
+				}
+			}
 		}
-		else
+		if (*(char *)((*cl)->content) != '|')
 			fd[0] = dup2(fd_init[0], 0);
-		if ((*cl)->next && *(char *)((*cl)->next->content) == ';')
-			(*cl) = (*cl)->next;
+		fd[1] = dup2(fd_init[1], 1);
+		ft_putnbr_fd(pip[0], 1);
 		(*cl) = (*cl)->next;
 	return (1);
 }

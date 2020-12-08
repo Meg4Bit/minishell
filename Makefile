@@ -12,7 +12,8 @@ SRC =   main.c\
 		ft_cd.c\
 		ft_exit.c\
 		func_checker.c\
-		signal_handlers.c
+		signal_handlers.c\
+		var_utils.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
 

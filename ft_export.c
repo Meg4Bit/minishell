@@ -121,33 +121,6 @@ static int		syntax_checker(char *str)
 	return (0);
 }
 
-static void		var_add(char *key, char *value, t_list *env_var)
-{
-	char		*var;
-	t_list		*list;
-
-	var = ft_strjoin(key, value);
-	list = ft_lstnew(var);
-	if (!list)
-	{
-		free(var);
-		exit(1);
-	}
-	ft_lstadd_back(&env_var, list);
-}
-
-static void		var_mod(t_list *list, char *value)
-{
-	char		*p;
-	char		*var_env;
-
-	if ((p = ft_strchr(list->content, '=')))
-		p[1] = '\0';
-	var_env = ft_strjoin(list->content, value);
-	free_str(list->content);
-	list->content = var_env;
-}
-
 void		ft_set(char *key, char *value, t_list *env_var)
 {
 	t_list	*list;
