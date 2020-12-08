@@ -26,25 +26,6 @@ int		ft_diff(char *s1, char *s2)
 	return ((s2[i] == '=' || !s2[i]) ? 0 : 1);
 }
 
- void		ft_lstrm(t_list **env_var, t_list *rm, void (*func)(void *))
- {
- 	t_list	*tmp;
-
- 	if (env_var && *env_var)
- 	{
- 		if (*env_var == rm)
- 		{
- 			tmp = (*env_var);
- 			(*env_var) = tmp->next;
- 			(*func)(tmp->content);
- 			free(tmp);
- 			tmp = 0;
- 		}
- 		else
- 			ft_lstrm(&(*env_var)->next, rm, func);
- 	}
- }
-
 static void	unset_err(char *str)
 {
 	ft_putstr_fd("unset: ", 1);
@@ -52,7 +33,7 @@ static void	unset_err(char *str)
 	ft_putstr_fd(": invalid parameter name\n", 1);
 }
 
-void		ft_unset(char **var, t_list *env_var)
+int		ft_unset(char **var, t_list *env_var)
 {
 	int		i;
 	t_list	*start;
@@ -68,10 +49,8 @@ void		ft_unset(char **var, t_list *env_var)
 			break;
 		}
 		if ((rm = ft_lstfind(start, var[i], ft_diff)))
-		{
 			ft_lstrm(&start, rm, free_str);
-			//continue;
-		}
 		i++;
 	}
+	return (1);
 }

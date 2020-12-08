@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstrm.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 19:09:07 by student           #+#    #+#             */
-/*   Updated: 2020/12/08 03:14:00 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/08 02:57:19 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/08 02:58:33 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *, int))
+void		ft_lstrm(t_list **env_var, t_list *rm, void (*func)(void *))
 {
-	while (lst)
+	t_list	*tmp;
+
+	if (env_var && *env_var)
 	{
-		f(lst->content, 1);
-		lst = lst->next;
+		if (*env_var == rm)
+		{
+			tmp = (*env_var);
+			(*env_var) = tmp->next;
+			(*func)(tmp->content);
+			free(tmp);
+			tmp = 0;
+		}
+		else
+			ft_lstrm(&(*env_var)->next, rm, func);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/07 01:14:04 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/08 03:08:15 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		ft_exiterr(char **var)
 	return (255);
 }
 
-void		ft_exit(char **var)
+int		ft_exit(char **var)
 {
 	int		i;
 

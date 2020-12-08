@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 19:09:07 by student           #+#    #+#             */
-/*   Updated: 2020/12/08 03:14:00 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/08 02:33:50 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/08 02:35:33 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *, int))
+t_list	*ft_lstfind(t_list *start, void *data, int (*func)())
 {
-	while (lst)
+	while (start)
 	{
-		f(lst->content, 1);
-		lst = lst->next;
+		if (!(*func)(start->content, data))
+			return (start);
+		start = start->next;
 	}
+	return (0);
 }
