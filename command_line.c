@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/07 14:00:09 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:41:26 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,117 @@ char	**exe_parser(char *str)
 	return (argv);
 }
 
+int		copy_set(char **main_str, char *argv, char *start)
+{
+	char	*copy;
+	char	*tmp;
+
+	if (!(tmp = ft_substr(start, 0, argv - start)))
+		return (0);
+	if (!(copy = ft_strjoin(*main_str, tmp)))
+		return(free_str(tmp));
+	free(*main_str);
+	free(tmp);
+	*main_str = copy;
+	return (1);
+}
+
+int		paste_env(char **main_str, char **argv, char **start, t_list *env_var)
+{
+	char	*key;
+	char	*tmp;
+
+	if (!copy_set(main_str, *argv, *start))
+		return (error_msg("malloc"));
+	(*argv)++;
+	*start = *argv;
+	while (**argv && **argv != '\'' && **argv != '"' && **argv != '$')
+		(*argv)++;
+	if (!(key = ft_substr(*start, 0, *argv - *start)))
+		return (error_msg("malloc"));
+	if (!(tmp = var_get(key, env_var)))
+		tmp = "";
+	free(key);
+	if (!(key = ft_strjoin(*main_str, tmp)))
+		return (error_msg("malloc"));
+	free(*main_str);
+	*main_str = key;
+	*start = *argv;
+	return (1);
+}
+
+char	*change_word(char *argv, t_list *env_var)
+{
+	int		i;
+	char	*start;
+	char	*tmp;
+	char	*main_str;
+
+	i = 0;
+	start = argv;
+	main_str = ft_calloc(1, sizeof(char));
+	while (*argv)
+	{
+		if (*argv == '\\')
+			argv += 2;
+		if (*argv == '\'')
+		{
+			if (!copy_set(&main_str, argv, start))
+				return (error_msg("malloc"));
+			argv++;
+			if (!(start = ft_strchr(argv, '\'')))
+				start = ft_strchr(argv, '\0');
+			if (!copy_set(&main_str, start, argv))
+				return (error_msg("malloc"));
+			argv = *start ? ++start : start;
+		}
+		if (*argv == '"')
+		{
+			if (!copy_set(&main_str, argv, start))
+				return (error_msg("malloc"));
+			argv++;
+			start = argv;
+			while (*argv && *argv != '"')
+			{
+				if (*argv == '$')
+				{
+					if (!paste_env(&main_str, &argv, &start, env_var))
+						return (0);
+				}
+				else
+					argv++;
+			}
+			if (!copy_set(&main_str, argv, start))
+				return (error_msg("malloc"));
+			start = argv ? ++argv : argv;
+		}
+		if (*argv == '$')
+		{
+			if (!paste_env(&main_str, &argv, &start, env_var))
+				return (0);
+		}
+		if (*argv && *argv != '\'' && *argv != '"' && *argv != '$')
+			argv++;
+	}
+	tmp = ft_strjoin(main_str, start);
+	return (tmp);
+}
+
+int		change_argv(char **argv, t_list *env_var)
+{
+	char	*copy;
+
+	while (*argv)
+	{
+		if (!(copy = change_word(*argv, env_var)))
+			return (0);
+		free(*argv);
+		*argv = copy;
+		argv++;
+	}
+	return (1);
+}
+
 int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 {
 	char	*name_prog;
@@ -112,17 +223,19 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 
 	if (!(argv = exe_parser((char *)(*cl)->content)))
 		return (error_msg("malloc"));
+	if (!change_argv(argv, env_var))
+		return (error_msg("malloc"));
 	if (!(name_prog = ft_strjoin("/usr/bin/", argv[0])))
 	{
 		free_arr(argv);
 		return (error_msg("malloc"));
 	}
-		//if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
-		//{
+		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
+		{
 			if (pipe(pip) == -1)
 				;
 			fd[1] = pip[1];
-		//}
+		}
 		dup2(fd[1], 1);
 		dup2(fd[0], 0);
 		int res;
