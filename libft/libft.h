@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:17:21 by student           #+#    #+#             */
-/*   Updated: 2020/12/07 01:07:47 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/08 03:02:22 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int				ft_atoi(const char *str);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
 char			*ft_strdup(const char *s);
+char			*ft_strndup(const char *s, int n);
 size_t			ft_strlen(const char *s);
 void			*ft_memset(void *s, int c, size_t n);
 void			*ft_calloc(size_t nmemb, size_t size);
@@ -39,6 +40,7 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strcmp(char *s1, char *s2);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
@@ -69,5 +71,8 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),\
 													void (*del)(void *));
 int				get_next_line(int fd, char **line);
 char			**ft_lsttoarr(t_list *env_var);
+t_list			*ft_lstfind(t_list *start, void *data, int (*func)());
+void			ft_lstsort(t_list **env_sorted, void *data, int (*func)());
+void			ft_lstrm(t_list **env_var, t_list *rm, void (*func)(void *));
 
 #endif

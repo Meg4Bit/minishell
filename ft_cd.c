@@ -12,18 +12,9 @@
 
 #include "minishell.h"
 
-void	ft_arrfree(char **arr)
-{
-	if (arr && *arr)
-	{
-		free(*arr);
-		*arr = 0;
-	}
-}
-
 static char		*path_checker(char *path, t_list *env_var)
 {
-	char			*str;
+	char		*str;
 
 	if (path && path[0] == '-')
 		str = var_copy("OLDPWD", env_var);
@@ -110,4 +101,5 @@ int		ft_cd(char **var, t_list *env_var)
 			free(path);
 		}
 	}
+	return (1);
 }

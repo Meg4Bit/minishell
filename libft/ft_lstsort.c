@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstsort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 19:09:07 by student           #+#    #+#             */
-/*   Updated: 2020/12/08 03:14:00 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/08 02:37:07 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/08 02:37:22 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *, int))
+void	ft_lstsort(t_list **env_sorted, void *data, int (*func)())
 {
-	while (lst)
+	t_list	*tmp;
+	t_list	*lst;
+
+	if ((*env_sorted) && (*func)((*env_sorted)->content, data) <= 0)
 	{
-		f(lst->content, 1);
-		lst = lst->next;
+		ft_lstsort(&(*env_sorted)->next, data, func);
+	}
+	else
+	{
+		lst = ft_lstnew(data);
+		tmp = (*env_sorted);
+		(*env_sorted) = lst;
+		lst->next = tmp;
 	}
 }

@@ -12,6 +12,9 @@ SRC =   main.c\
 		ft_cd.c\
 		ft_exit.c\
 		func_checker.c\
+		utils.c\
+		var_utils.c\
+		var_utils_2.c\
 		signal_handlers.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
@@ -19,7 +22,8 @@ OBJ = $(SRC:.c=.o)
 all: libfta $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
+	#$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
+	$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
 
 libfta:
 	@cd $(LIB) && make

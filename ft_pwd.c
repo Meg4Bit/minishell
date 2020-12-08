@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 01:49:45 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/30 17:20:38 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/08 02:56:06 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		ft_arrlen(char **arr)
-{
-	int len;
-
-	len = 0;
-	while (arr[len])
-	{
-		len++;
-	}
-	return (len);
-}
 
 static	int	pwd_err(char *dir)
 {
@@ -34,14 +22,18 @@ static	int	pwd_err(char *dir)
 	return (0);
 }
 
-void	ft_pwd(char **dir)
+int	ft_pwd(char **dir)
 {
 	char		*wdir;
 
 	if (ft_arrlen(dir) == 1)
 	{
 		if (!(wdir = getcwd((char *)NULL, 0)))
+		{
 			pwd_err(dir[0]);
+			return (0);
+		}
+
 		else
 		{
 			ft_putstr_fd(wdir, 1);
@@ -54,4 +46,5 @@ void	ft_pwd(char **dir)
 		ft_putstr_fd("too many aguments", 2);
 	}
 	ft_putstr_fd("\n", 1);
+	return (1);
 }
