@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/08 19:41:26 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 01:49:52 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		argv_len(char *str)
 	len = *str ? 1 : 0;
 	while (str[i])
 	{
+		if (str[i] == '\\')
+			i += str[i + 1] ? 2 : 1;
 		if (str[i] == ' ')
 		{
 			len++;
@@ -39,7 +41,7 @@ int		argv_len(char *str)
 				i++;
 		}
 		skip_quotes(str, &i);
-		i++;
+		i += str[i] ? 1 : 0;
 	}
 	return (len);
 }
@@ -58,17 +60,18 @@ static void	*free_arr(char **arr)
 	return (0);
 }
 
-int		create_arr(char **argv, char *str)
+int		create_arr(char **argv, char *str, int j)
 {
 	char	*start;
 	int		i;
-	int		j;
 
 	i = 0;
 	j = 0;
 	start = str;
 	while (str[i])
 	{
+		if (str[i] == '\\')
+			i += str[i + 1] ? 2 : 1;
 		if (str[i] == ' ')
 		{
 			if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
@@ -78,7 +81,7 @@ int		create_arr(char **argv, char *str)
 			start = &str[i];
 		}
 		skip_quotes(str, &i);
-		i++;
+		i += str[i] ? 1 : 0;
 	}
 	if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
 		return (0);
@@ -94,124 +97,13 @@ char	**exe_parser(char *str)
 		return (NULL);
 	if (!(argv = (char **)malloc(sizeof(char *) * (argv_len(str) + 1))))
 		return ((char **)free_str(str));
-	if (!create_arr(argv, str))
+	if (!create_arr(argv, str, 0))
 	{
 		free(str);
 		return (char **)free_arr(argv);
 	}
 	free(str);
 	return (argv);
-}
-
-int		copy_set(char **main_str, char *argv, char *start)
-{
-	char	*copy;
-	char	*tmp;
-
-	if (!(tmp = ft_substr(start, 0, argv - start)))
-		return (0);
-	if (!(copy = ft_strjoin(*main_str, tmp)))
-		return(free_str(tmp));
-	free(*main_str);
-	free(tmp);
-	*main_str = copy;
-	return (1);
-}
-
-int		paste_env(char **main_str, char **argv, char **start, t_list *env_var)
-{
-	char	*key;
-	char	*tmp;
-
-	if (!copy_set(main_str, *argv, *start))
-		return (error_msg("malloc"));
-	(*argv)++;
-	*start = *argv;
-	while (**argv && **argv != '\'' && **argv != '"' && **argv != '$')
-		(*argv)++;
-	if (!(key = ft_substr(*start, 0, *argv - *start)))
-		return (error_msg("malloc"));
-	if (!(tmp = var_get(key, env_var)))
-		tmp = "";
-	free(key);
-	if (!(key = ft_strjoin(*main_str, tmp)))
-		return (error_msg("malloc"));
-	free(*main_str);
-	*main_str = key;
-	*start = *argv;
-	return (1);
-}
-
-char	*change_word(char *argv, t_list *env_var)
-{
-	int		i;
-	char	*start;
-	char	*tmp;
-	char	*main_str;
-
-	i = 0;
-	start = argv;
-	main_str = ft_calloc(1, sizeof(char));
-	while (*argv)
-	{
-		if (*argv == '\\')
-			argv += 2;
-		if (*argv == '\'')
-		{
-			if (!copy_set(&main_str, argv, start))
-				return (error_msg("malloc"));
-			argv++;
-			if (!(start = ft_strchr(argv, '\'')))
-				start = ft_strchr(argv, '\0');
-			if (!copy_set(&main_str, start, argv))
-				return (error_msg("malloc"));
-			argv = *start ? ++start : start;
-		}
-		if (*argv == '"')
-		{
-			if (!copy_set(&main_str, argv, start))
-				return (error_msg("malloc"));
-			argv++;
-			start = argv;
-			while (*argv && *argv != '"')
-			{
-				if (*argv == '$')
-				{
-					if (!paste_env(&main_str, &argv, &start, env_var))
-						return (0);
-				}
-				else
-					argv++;
-			}
-			if (!copy_set(&main_str, argv, start))
-				return (error_msg("malloc"));
-			start = argv ? ++argv : argv;
-		}
-		if (*argv == '$')
-		{
-			if (!paste_env(&main_str, &argv, &start, env_var))
-				return (0);
-		}
-		if (*argv && *argv != '\'' && *argv != '"' && *argv != '$')
-			argv++;
-	}
-	tmp = ft_strjoin(main_str, start);
-	return (tmp);
-}
-
-int		change_argv(char **argv, t_list *env_var)
-{
-	char	*copy;
-
-	while (*argv)
-	{
-		if (!(copy = change_word(*argv, env_var)))
-			return (0);
-		free(*argv);
-		*argv = copy;
-		argv++;
-	}
-	return (1);
 }
 
 int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
@@ -224,7 +116,10 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 	if (!(argv = exe_parser((char *)(*cl)->content)))
 		return (error_msg("malloc"));
 	if (!change_argv(argv, env_var))
+	{
+		free_arr(argv);
 		return (error_msg("malloc"));
+	}
 	if (!(name_prog = ft_strjoin("/usr/bin/", argv[0])))
 	{
 		free_arr(argv);

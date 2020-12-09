@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/11/26 17:49:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/09 22:21:23 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	skip_quotes(char *line, int *i)
 {
 	if (line[*i] == '"')
 		while (line[++*i] != '"' && line[*i])
-			;
+		{
+			if (line[*i] == '\\')
+				*i += line[*i + 1] ? 2 : 1;
+		}
 	if (line[*i] == '\'')
 		while (line[++*i] != '\'' && line[*i])
 			;
@@ -53,6 +56,8 @@ t_list	*list_parser(char *line)
 	i = 0;
 	while (line[i])
 	{
+		if (line[i] == '\\')
+			i += line[i + 1] ? 2 : 1;
 		skip_quotes(line, &i);
 		if (line[i] == ';' || line[i] == '|')
 		{
@@ -62,7 +67,7 @@ t_list	*list_parser(char *line)
 			if (!add_data_list(&commands, start++, 1))
 				return (0);
 		}
-		i++;
+		i += line[i] ? 1 : 0;
 	}
 	if (!add_data_list(&commands, start, (int)ft_strlen(start)))
 		return (0);

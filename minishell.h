@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/08 13:47:03 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 01:40:07 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	var_mod(t_list *list, char *value);
 char	*var_get(char *key, t_list *env_var);
 char	*var_copy(char *key, t_list *env_var);
 void	var_handler(char *str, t_list *env_var);
-t_list 	*var_sort(t_list *env_var);
+t_list	*var_sort(t_list *env_var);
 int		ft_unset(char **var, t_list *env_var);
 int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
@@ -68,5 +68,8 @@ void	child_slash_handler();
 void	c_handler();
 void	ft_pass(void *p);
 int		syntax_checker(char *str);
+int		change_argv(char **argv, t_list *env_var);
+int		loop_change(char **main_str, char **argv, char **start, t_list *env_var);
+int		copy_set(char **main_str, char *argv, char *start);
 
 #endif
