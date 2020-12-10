@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 05:14:31 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/10 05:26:44 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,13 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 		return (error_msg("malloc"));
 	}
 	exe_dir = get_exedir(argv, env_var);
-	if (!(name_prog = ft_strjoin(exe_dir, argv[0])))
-	{
-		ft_putstr_fd("#FIXME#", 1);
-		free_arr(argv);
-		return (error_msg("malloc"));
-	}
+	name_prog = ft_strjoin(exe_dir, argv[0]);
+	//if (!(name_prog = ft_strjoin(exe_dir, argv[0])))
+	//{
+	//	ft_putstr_fd("#FIXME#", 1);
+	//	free_arr(argv);
+	//	return (error_msg("malloc"));
+	//}
 		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
 		{
 			if (pipe(pip) == -1)
