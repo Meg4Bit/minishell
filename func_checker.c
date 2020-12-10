@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 16:24:31 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/08 17:23:17 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:23:41 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ int		func_checker(char **argv, t_list *env_var)
 		if (!ft_strncmp(funct[i].key, argv[0], ft_strlen(argv[0])))
 		{
 			if (!(funct[i].value(argv, env_var)))
-				return (-1);
+				return (0);
 			return (1);
 		}
 		i++;
 	}
-	return (0);
 }

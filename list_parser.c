@@ -6,20 +6,13 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/09 22:21:23 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:35:48 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		free_str(void *tmp)
-{
-	if (tmp)
-		free(tmp);
-	return (0);
-}
-
-int		add_data_list(t_list **commands, char *start, int len)
+static int	add_data_list(t_list **commands, char *start, int len)
 {
 	t_list	*add;
 	char	*tmp;
@@ -32,7 +25,7 @@ int		add_data_list(t_list **commands, char *start, int len)
 	return (1);
 }
 
-void	skip_quotes(char *line, int *i)
+void		skip_quotes(char *line, int *i)
 {
 	if (line[*i] == '"')
 		while (line[++*i] != '"' && line[*i])
@@ -45,7 +38,7 @@ void	skip_quotes(char *line, int *i)
 			;
 }
 
-t_list	*list_parser(char *line)
+t_list		*list_parser(char *line)
 {
 	t_list	*commands;
 	char	*start;

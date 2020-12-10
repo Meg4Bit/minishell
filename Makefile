@@ -18,15 +18,16 @@ SRC =   main.c\
 		signal_handlers.c\
 		change_word.c\
 		get_exedir.c\
-		change_tokens.c
+		change_tokens.c\
+		create_argv.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
 
 all: libfta $(NAME)
 
 $(NAME): $(OBJ)
-	#$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
-	$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
+	$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
+	# $(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
 
 libfta:
 	@cd $(LIB) && make

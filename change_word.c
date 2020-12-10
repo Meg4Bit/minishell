@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:05:59 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 01:47:49 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:28:14 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			copy_set(char **main_str, char *argv, char *start)
 	if (!(tmp = ft_substr(start, 0, argv - start)))
 		return (0);
 	if (!(copy = ft_strjoin(*main_str, tmp)))
-		return(free_str(tmp));
+		return (free_str(tmp));
 	free(*main_str);
 	free(tmp);
 	*main_str = copy;

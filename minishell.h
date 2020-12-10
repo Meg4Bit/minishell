@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 03:42:58 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:05:18 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,18 @@ typedef struct	s_sfunc
 }				t_sfunc;
 
 void	command_line(char *line, t_list *env_var);
+char	**exe_parser(char *str);
 int		free_str(void *tmp);
 void	skip_quotes(char *line, int *i);
 t_list	*list_parser(char *line);
-int		add_data_list(t_list **commands, char *start, int len);
+//int		add_data_list(t_list **commands, char *start, int len);
 int		ft_pwd(char **dir);
 int		ft_echo(char **line);
 int		ft_env(char ** argv, t_list *env_var);
 int		ft_export(char **var, t_list *env_var);
 t_list	*get_env(char **env);
 int		ft_arrlen(char **arr);
-void	ft_arrfree(char **arr);
+void	*free_arr(char **arr);
 void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *));
 t_list	*ft_lstfind(t_list *start, void *data, int (*func)());
 void	ft_set(char *key, char *value, t_list *env_var);
@@ -72,6 +73,7 @@ int		syntax_checker(char *str);
 int		change_argv(char **argv, t_list *env_var);
 int		loop_change(char **main_str, char **argv, char **start, t_list *env_var);
 int		copy_set(char **main_str, char *argv, char *start);
-char	*get_exedir(char **exe, t_list *env_var);
+char	*get_exedir(char *exe, t_list *env_var);
+char	**exe_parser(char *str);
 
 #endif

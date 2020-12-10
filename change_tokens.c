@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:36:28 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 01:48:35 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:29:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ static int	slash_change(char **main_str, char **argv, char **start, int flag)
 	if (!copy_set(main_str, *argv, *start))
 		return (0);
 	*start = (*argv)++;
-	*start += (flag || **argv == '\\' || **argv == '$' || **argv == '"') ? 1 : 0;
+	*start += (flag || **argv == '\\' || **argv == '$' ||\
+												**argv == '"') ? 1 : 0;
 	*argv += **argv ? 1 : 0;
 	return (1);
 }
 
-static int	paste_env(char **main_str, char **argv, char **start, t_list *env_var)
+static int	paste_env(char **main_str, char **argv, char **start,\
+															t_list *env_var)
 {
 	char	*key;
 	char	*tmp;
@@ -64,7 +66,7 @@ static int	quote_change(char **main_str, char **argv, char **start)
 }
 
 static int	dub_quote_change(char **main_str, char **argv, char **start,\
-		t_list *env_var)
+															t_list *env_var)
 {
 	if (!copy_set(main_str, *argv, *start))
 		return (0);
@@ -90,7 +92,8 @@ static int	dub_quote_change(char **main_str, char **argv, char **start,\
 	return (1);
 }
 
-int			loop_change(char **main_str, char **argv, char **start, t_list *env_var)
+int			loop_change(char **main_str, char **argv, char **start,\
+															t_list *env_var)
 {
 	if (**argv == '\'')
 	{

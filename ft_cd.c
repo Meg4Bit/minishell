@@ -57,7 +57,7 @@ static void			ft_cderr(char *path)
 	}
 	ft_stderr("cd: ", path, str);
 	ft_putstr_fd("\n", 2);
-	ft_arrfree(&str);
+	free_str(str);
 }
 
 static	void	pwd_change(char *path, t_list *env_var)
@@ -77,7 +77,7 @@ static	void	pwd_change(char *path, t_list *env_var)
 		pwd_env = getcwd((char *)NULL, 0);
 		ft_set("OLDPWD", pwd_old, env_var);
 		ft_set("PWD", pwd_env, env_var);
-		ft_arrfree(&pwd_env);
+		free_str(pwd_env);
 	}
 }
 
