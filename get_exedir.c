@@ -6,13 +6,13 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:21:42 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/10 03:42:06 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/10 05:16:34 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char			dir_checker(char *exe, char *env_dir)
+static char			*dir_checker(char *exe, char *env_dir)
 {
 	DIR				*dirp;
 	struct dirent 	*sdir;
@@ -31,17 +31,17 @@ static char			dir_checker(char *exe, char *env_dir)
 	return (0);
 }
 
-static char			get_exepath(char *exe, char **env_dir)
+static char			*get_exepath(char *exe, char **env_dir)
 {
 	char			*path;
 	int 			i;
 
-	i = 0;
-	while (env_dir[i])
+	i = -1;
+	//path = 0; // COUDL BE DELETED?
+	while (env_dir[++i])
 	{
 		if ((path = dir_checker(exe, env_dir[i])) != 0)
 			return (ft_strjoin(path, "/"));
-		i++;
 	}
 	return (0);
 }
@@ -53,8 +53,7 @@ char			*get_exedir(char **exe, t_list *env_var)
 	char		**env_dir;
 
 	var_path = var_get("PATH", env_var);
-	env_dir = ft_split(var_path, ":");
-	if (!(exe_dir = get_exepath(exe[0], env_dir)))
-		return (0);
+	env_dir = ft_split(var_path, ':');
+	exe_dir = get_exepath(exe[0], env_dir);
 	return (exe_dir);
 }

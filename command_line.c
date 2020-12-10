@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 01:49:52 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 05:14:31 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**exe_parser(char *str)
 int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 {
 	char	*name_prog;
+	char	*exe_dir;
 	char	**argv;
 	int		pip[2];
 	pid_t	pid;
@@ -120,8 +121,10 @@ int		command_exec(t_list	**cl, t_list *env_var, int *fd, int *fd_init)
 		free_arr(argv);
 		return (error_msg("malloc"));
 	}
-	if (!(name_prog = ft_strjoin("/usr/bin/", argv[0])))
+	exe_dir = get_exedir(argv, env_var);
+	if (!(name_prog = ft_strjoin(exe_dir, argv[0])))
 	{
+		ft_putstr_fd("#FIXME#", 1);
 		free_arr(argv);
 		return (error_msg("malloc"));
 	}
