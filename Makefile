@@ -15,7 +15,9 @@ SRC =   main.c\
 		utils.c\
 		var_utils.c\
 		var_utils_2.c\
-		signal_handlers.c
+		signal_handlers.c\
+		change_word.c\
+		change_tokens.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
 

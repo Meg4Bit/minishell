@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/08 03:08:15 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/09 17:53:32 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ft_exit(char **var)
 	int		i;
 
 	i = 0;
+	ft_putstr_fd("exit\n", 1);
 	if (var[1])
 	{
 		if (!exit_checker(var[1]))
