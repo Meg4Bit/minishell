@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/08 13:47:03 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/10 03:21:26 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <string.h>
 # include "libft/libft.h"
+# include <dirent.h>
 
 typedef struct	s_fd
 {
@@ -68,5 +69,6 @@ void	child_slash_handler();
 void	c_handler();
 void	ft_pass(void *p);
 int		syntax_checker(char *str);
+char	*get_exedir(char **exe, t_list *env_var);
 
 #endif
