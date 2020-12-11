@@ -6,13 +6,13 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 16:24:31 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 16:23:41 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/11 12:51:13 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		func_checker(char **argv, t_list *env_var)
+int		func_checker(char **argv, t_list *env_var, int flag)
 {
 	t_sfunc	*funct;
 	int		i;
@@ -32,10 +32,11 @@ int		func_checker(char **argv, t_list *env_var)
 	{
 		if (!ft_strncmp(funct[i].key, argv[0], ft_strlen(argv[0])))
 		{
-			if (!(funct[i].value(argv, env_var)))
+			if (flag && !(funct[i].value(argv, env_var)))
 				return (0);
 			return (1);
 		}
 		i++;
 	}
+	return (0);
 }

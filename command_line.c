@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/11 01:25:47 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 02:45:35 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,31 @@ int		free_str(void *tmp)
 	return (0);
 }
 
-int		inbuilt_check(char *name_prog)
-{
-	int i = 0;
-	char	*func[] = {
-		"pwd",
-		"echo",
-		"env",
-		"export",
-		"unset",
-		"cd",
-		"exit",
-		NULL,
-	};
-	while (func[i])
-	{
-		if (!ft_strncmp(func[i], name_prog, ft_strlen(name_prog)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	**copy_arr(char **arr)
-{
-	char	**new_arr;
-	int		len;
-	char	start;
-
-	if (!arr)
-		return (0);
-	len = ft_arrlen(arr);
-	if (!(new_arr = (char **)malloc(sizeof(char *) * (len + 1))))
-		return (0);
-	start = new_arr;
-	while (*arr)
-		*new_arr++ = *arr++;
-	*new_arr = NULL;
-	return (start);
-}
-
 int		name_setup(char **argv, char **name_prog, t_list *env_var)
 {
 	char	*exe_dir;
+	char	*tmp;
+	int		path;
 
-	*name_prog = *argv;
-	if (!inbuilt_check((argv)[0]))
+	if (!(*name_prog = ft_strdup(*argv)))
+		return (free_arr(argv) + error_msg("malloc"));
+	path = 0;
+	tmp = argv[0];
+	while (*argv[0])
+		if (*(argv[0])++ == '/')
+			path = 1;
+	argv[0] = tmp;
+	if (!func_checker(argv, env_var, 0) && !path)
 	{
+		free(*name_prog);
 		if (!(exe_dir = get_exedir((argv)[0], env_var)))
 			return (free_arr(argv));
 		if (!(*name_prog = ft_strjoin(exe_dir, (argv)[0])))
 		{
-			free_arr(argv);
 			free(exe_dir);
-			return (error_msg("malloc"));
+			return (free_arr(argv) + error_msg("malloc"));
 		}
+		free(exe_dir);
 	}
 	return (1);
 }
@@ -95,6 +65,11 @@ int		argv_setup(char ***argv, char ***redirect, t_list *cl, t_list *env_var)
 	if (!(*argv = exe_parser((char *)cl->content)))
 		return (error_msg("malloc"));
 	sort_argv(*argv);
+	for (int i = 0; (*argv)[i] != 0; i++)
+	{
+		ft_putstr_fd((*argv)[i], 1);
+		ft_putstr_fd("\n", 1);
+	}
 	tmp = *argv;
 	while (*tmp && **tmp != '>' && **tmp != '<')
 		tmp++;
@@ -127,12 +102,7 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 	if (!argv_setup(&argv, &redirect, *cl, env_var))
 		return (error_msg("malloc"));
 	if (!name_setup(argv, &name_prog, env_var))
-		return (0);
-	for (int i = 0; argv[i] != 0; i++)
-	{
-		ft_putstr_fd(argv[i], 1);
-		ft_putstr_fd("\n", 1);
-	}
+		return (free_arr(redirect));
 		if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
 		{
 			if (pipe(pip) == -1)
@@ -142,9 +112,11 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 		dup2(fd[1], 1);
 		dup2(fd[0], 0);
 		signal(SIGQUIT, child_slash_handler);
-		if (inbuilt_check(argv[0]))
+	if (argv[0])
+	{
+		if (func_checker(argv, env_var, 0))
 		{
-			if (!(func_checker(argv, env_var)))
+			if (!(func_checker(argv, env_var, 1)))
 				return (0);
 		}
 		else
@@ -158,9 +130,10 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 			if (pid == 0)
 			{
 				if (execve(name_prog, argv, NULL) == -1)
-					;
+					ft_putstr_fd(strerror(errno), 2);
 			}
 		}
+	}
 		if (fd[0] != 0)
 			close(fd[0]);
 		if (fd[1] != 1)

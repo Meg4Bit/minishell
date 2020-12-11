@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 17:05:18 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/11 20:47:02 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		ft_env(char ** argv, t_list *env_var);
 int		ft_export(char **var, t_list *env_var);
 t_list	*get_env(char **env);
 int		ft_arrlen(char **arr);
-void	*free_arr(char **arr);
+int		free_arr(char **arr);
 void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *));
 t_list	*ft_lstfind(t_list *start, void *data, int (*func)());
 void	ft_set(char *key, char *value, t_list *env_var);
@@ -63,7 +63,7 @@ int		ft_unset(char **var, t_list *env_var);
 int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
 int		ft_exit(char **var);
-int		func_checker(char **argv, t_list *env_var);
+int		func_checker(char **argv, t_list *env_var, int flag);
 void	put_env(void *content);
 void	slash_handler();
 void	child_slash_handler();
@@ -75,5 +75,7 @@ int		loop_change(char **main_str, char **argv, char **start, t_list *env_var);
 int		copy_set(char **main_str, char *argv, char *start);
 char	*get_exedir(char *exe, t_list *env_var);
 char	**exe_parser(char *str);
+char	**copy_arr(char **arr);
+void	sort_argv(char **arr);
 
 #endif

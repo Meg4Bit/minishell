@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/10 14:11:22 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/11 13:12:34 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_arrlen(char **arr)
 	return (len);
 }
 
-void	*free_arr(char **arr)
+int		free_arr(char **arr)
 {
 	int		i;
 

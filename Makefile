@@ -19,7 +19,8 @@ SRC =   main.c\
 		change_word.c\
 		get_exedir.c\
 		change_tokens.c\
-		create_argv.c
+		create_argv.c\
+		arr_utils.c
 OBJ = $(SRC:.c=.o)
 #CFLAGS = -Wall -Wextra -Werror
 

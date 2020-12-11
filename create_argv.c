@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:31:25 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 21:52:34 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 02:42:40 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,22 @@ static int	create_arr(char **argv, char *str, int j)
 	{
 		if (str[i] == '\\')
 			i += str[i + 1] ? 2 : 1;
+		if (str[i] == '>' || str[i] == '<')
+		{
+			i += str[i + 1] == '>' ? 2 : 1;
+			while (str[i] == ' ')
+				i++;
+		}
 		if (str[i] == ' ' || str[i] == '>' || str[i] == '<')
 		{
 			if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
 				return (0);
-			i += str[i + 1] == '>' ? 2 : 1;
 			while (str[i] == ' ')
 				i++;
-			start = (str[i] == '>' || str[i] == '<') ? start : &str[i];
+			start = &str[i];
 		}
 		skip_quotes(str, &i);
-		i += (str[i] && str[i] != '>' && str[i] != '<') ? 1 : 0;
+		i += (str[i] && str[i] != '>' && str[i] != '<' && str[i] != '\\') ? 1 : 0;
 	}
 	if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
 		return (0);
