@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:59:56 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/11 20:50:26 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 02:47:30 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	sort_argv(char **arr)
 			arr[arr_end] = arr[cur_index];
 			current = cur_index;
 			while (current < arr_end - 1)
-				arr[current] = arr[current++ + 1];
+				arr[current++] = arr[current + 1];
 			arr[current] = tmp;
 			len--;
 		}
