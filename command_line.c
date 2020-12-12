@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 00:08:30 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 00:13:13 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,16 +196,8 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 		{
 			(*cl) = (*cl)->next;
 			if (*(char *)((*cl)->content) == '|')
-			{
 				fd[0] = pip[0];
-				if (!(*cl)->next)
-				{
-					close(fd[0]);
-					fd[0] = dup2(fd_init[0], 0);
-				}
-			}
 		}
-		ft_putnbr_fd(pip[0], 1);
 		(*cl) = (*cl)->next;
 	return (1);
 }
