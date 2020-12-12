@@ -19,7 +19,7 @@ void	ft_stderr(char *func, char *arg, char *err)
 	ft_putstr_fd(err, 2);
 }
 
-int		syntax_checker(char *str)
+static int	syntax_checker(char *str)
 {
 	int 		j;
 	int			i;

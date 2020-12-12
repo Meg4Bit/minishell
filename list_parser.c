@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 15:35:48 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 18:38:28 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static int	add_data_list(t_list **commands, char *start, int len)
 	char	*tmp;
 
 	if (!(tmp = ft_substr(start, 0, len)))
-		return (0);
+		return (error_msg("malloc error\n"));
 	if (!(add = ft_lstnew(tmp)))
-		return (free_str(tmp));
+		return (free_str(tmp) + error_msg("malloc error\n"));
 	ft_lstadd_back(commands, add);
 	return (1);
 }
@@ -38,6 +38,11 @@ void		skip_quotes(char *line, int *i)
 			;
 }
 
+int			syntax_checker(char *line)
+{
+	return (1);
+}
+
 t_list		*list_parser(char *line)
 {
 	t_list	*commands;
@@ -47,6 +52,8 @@ t_list		*list_parser(char *line)
 	commands = NULL;
 	start = line;
 	i = 0;
+	if (!syntax_checker(line))
+		return (0);
 	while (line[i])
 	{
 		if (line[i] == '\\')
@@ -55,14 +62,14 @@ t_list		*list_parser(char *line)
 		if (line[i] == ';' || line[i] == '|')
 		{
 			if (!add_data_list(&commands, start, &line[i] - start))
-				return (0);
+				return (ft_lstclear(&commands, free));
 			start = &line[i];
 			if (!add_data_list(&commands, start++, 1))
-				return (0);
+				return (ft_lstclear(&commands, free));
 		}
 		i += line[i] ? 1 : 0;
 	}
 	if (!add_data_list(&commands, start, (int)ft_strlen(start)))
-		return (0);
+		return (ft_lstclear(&commands, free));
 	return (commands);
 }
