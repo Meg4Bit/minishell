@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/12 20:06:59 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 21:53:53 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 int		error_msg(char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd(": ", 2);
+	if (*msg)
+	{
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd(": ", 2);
+	}
 	if (errno)
 		ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
@@ -108,8 +111,8 @@ int		open_redirect(char **redirect, int *fd)
 			}
 			else
 			{
-				while (*(++name) == ' ')
-					;
+				while (*name == ' ')
+					name++;
 				if ((fd[1] = open(name, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
 					return (error_msg(name));
 			}
@@ -118,8 +121,8 @@ int		open_redirect(char **redirect, int *fd)
 		{
 			if (fd[0] != 0)
 				close(fd[0]);
-			while (*(++name) == ' ')
-				;
+			while (*name == ' ')
+				name++;
 			if ((fd[0] = open(name, O_RDONLY)) == -1)
 				return (error_msg(name));
 		}
@@ -133,14 +136,14 @@ int		open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	if (cl->next && *(char *)(cl->next->content) == '|')
 	{
 		if (pipe(pip) == -1)
-			;
+			return (error_msg(""));
 		fd[1] = pip[1];
 	}
 	if (!open_redirect(redirect, fd))
-		return (free_arr(redirect));
+		return (0);
 	free_arr(redirect);
-	dup2(fd[1], 1);
 	dup2(fd[0], 0);
+	dup2(fd[1], 1);
 	return (1);
 }
 
@@ -156,13 +159,8 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 		return (error_msg("malloc"));
 	if (!name_setup(argv, &name_prog, env_var))
 		return (free_arr(redirect));
-	for (int i = 0; redirect[i] != 0; i++)
-	{
-		ft_putstr_fd(redirect[i], 1);
-		ft_putstr_fd("\n", 1);
-	}
 	if (!open_fd(*cl, redirect, fd, pip))
-		return (0);
+		return (free_arr(redirect));
 	signal(SIGQUIT, child_slash_handler);
 	if (argv[0])
 	{
@@ -190,7 +188,8 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 			close(fd[0]);
 		if (fd[1] != 1)
 			close(fd[1]);
-		dup2(fd_init[1], 1);
+		fd[0] = dup2(fd_init[0], 0);
+		fd[1] = dup2(fd_init[1], 1);
 		//ft_putnbr_fd(pip[0], 1);
 		free_str(name_prog);
 		free_arr(argv);
@@ -207,9 +206,6 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 				}
 			}
 		}
-		if (*(char *)((*cl)->content) != '|')
-			fd[0] = dup2(fd_init[0], 0);
-		fd[1] = dup2(fd_init[1], 1);
 		ft_putnbr_fd(pip[0], 1);
 		(*cl) = (*cl)->next;
 	return (1);

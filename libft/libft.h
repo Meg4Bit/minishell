@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:17:21 by student           #+#    #+#             */
-/*   Updated: 2020/12/12 14:48:26 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/12 23:23:35 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ char			**ft_lsttoarr(t_list *env_var);
 t_list			*ft_lstfind(t_list *start, void *data, int (*func)());
 void			ft_lstsort(t_list **env_sorted, void *data, int (*func)());
 void			ft_lstrm(t_list **env_var, t_list *rm, void (*func)(void *));
+char			*ft_strtrim_mod(char const *s1, char const set);
 
 #endif
