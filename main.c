@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:19:42 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/11 12:25:25 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 00:25:25 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int		main(int argc, char **argv, char **env)
 		signal(SIGINT, c_handler);
 		ft_putstr_fd("prompt > ", 1);
 		if (!get_next_line(0, &line))
-		{
-			ft_putstr_fd("exit\n", 1);
 			ft_exit(argv);
-		}
 		if (*line)
 		{
 			//ft_putstr_fd(line, 1);
