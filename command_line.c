@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/12 21:53:53 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 00:08:30 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 			close(fd[1]);
 		fd[0] = dup2(fd_init[0], 0);
 		fd[1] = dup2(fd_init[1], 1);
-		//ft_putnbr_fd(pip[0], 1);
 		free_str(name_prog);
 		free_arr(argv);
 		if ((*cl)->next)
