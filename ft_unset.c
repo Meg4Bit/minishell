@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		ft_diff(char *s1, char *s2)
+static int	ft_diff(char *s1, char *s2)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ static void	unset_err(char *str)
 	ft_putstr_fd(": invalid parameter name\n", 1);
 }
 
-int		ft_unset(char **var, t_list *env_var)
+int			ft_unset(char **var, t_list *env_var)
 {
 	int		i;
 	t_list	*start;

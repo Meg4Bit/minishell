@@ -44,23 +44,18 @@ static char		*path_get(char *path, t_list *env_var)
 	return (str);
 }
 
-static void			ft_cderr(char *path)
+static int			ft_cderr(char *path)
 {
 	char			*str;
-	char			*err;
 
-	err = strerror(errno);
-	str = ft_strjoin(": ", err);
-	if (!str)
-	{
-		exit(1);
-	}
-	ft_stderr("cd: ", path, str);
-	ft_putstr_fd("\n", 2);
+	if (!(str = ft_strjoin("cd: ", path)))
+		return (error_msg("malloc error"));
+	error_msg(str);
 	free_str(str);
+	return (0);
 }
 
-static	void	pwd_change(char *path, t_list *env_var)
+static	int	pwd_change(char *path, t_list *env_var)
 {
 	char		*pwd_env;
 	char		*pwd_old;
@@ -70,34 +65,34 @@ static	void	pwd_change(char *path, t_list *env_var)
 	i = chdir(path);
 	if (i == -1)
 	{
-		ft_cderr(path);
+		return (ft_cderr(path));
 	}
 	else
 	{
-		pwd_env = getcwd((char *)NULL, 0);
+		if (!(pwd_env = getcwd((char *)NULL, 0)))
+			return (error_msg(""));
 		ft_set("OLDPWD", pwd_old, env_var);
 		ft_set("PWD", pwd_env, env_var);
 		free_str(pwd_env);
 	}
+	return (1);
 }
 
-int		ft_cd(char **var, t_list *env_var)
+int			ft_cd(char **var, t_list *env_var)
 {
 	int		len;
 	char	*path;
 
 	len = ft_arrlen(var);
 	if (len > 2)
-	{
-		ft_stderr("cd:", " ", "too many argument\n");
-		return (0);
-	}
+		return (error_msg("cd: too many arguments"));
 	else
 	{
 		path = path_get(var[1], env_var);
 		if (path)
 		{
-			pwd_change(path, env_var);
+			if (!pwd_change(path, env_var))
+				return (free_str(path));
 			free(path);
 		}
 	}

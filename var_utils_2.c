@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/08 02:51:17 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:50:25 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ t_list 	*var_sort(t_list *env_var)
 		env_var = env_var->next;
 	}
 	return (env_sorted);
+}
+
+static int	syntax_checker(char *str)
+{
+	int 		j;
+	int			i;
+
+	i = -1;
+	if (str[0] == '=')
+		ft_stderr("export: ", str, ": not a valid identifier\n");
+	while (str[++i] && str[i] != '=')
+	{
+		j = ft_isalnum(str[i]);
+		if (j == 0 && str[i] != '_')
+		{
+			ft_stderr("export: ", str, ": not a valid identifier\n");
+			return (1);
+		}
+	}
+	return (0);
 }
 
 void		var_handler(char *str, t_list *env_var)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 01:49:45 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/08 02:56:06 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/13 13:11:45 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	pwd_err(char *dir)
+static int	pwd_err(char *dir)
 {
 	ft_putstr_fd("pwd: ", 2);
 	ft_putstr_fd(dir, 2);
@@ -22,7 +22,7 @@ static	int	pwd_err(char *dir)
 	return (0);
 }
 
-int	ft_pwd(char **dir)
+int			ft_pwd(char **dir)
 {
 	char		*wdir;
 

@@ -19,26 +19,6 @@ void	ft_stderr(char *func, char *arg, char *err)
 	ft_putstr_fd(err, 2);
 }
 
-static int	syntax_checker(char *str)
-{
-	int 		j;
-	int			i;
-
-	i = -1;
-	if (str[0] == '=')
-		ft_stderr("export: ", str, ": not a valid identifier\n");
-	while (str[++i] && str[i] != '=')
-	{
-		j = ft_isalnum(str[i]);
-		if (j == 0 && str[i] != '_')
-		{
-			ft_stderr("export: ", str, ": not a valid identifier\n");
-			return (1);
-		}
-	}
-	return (0);
-}
-
 void		ft_set(char *key, char *value, t_list *env_var)
 {
 	t_list	*list;
@@ -57,19 +37,19 @@ void		ft_set(char *key, char *value, t_list *env_var)
 
 static void		put_export(void *content)
 {
+	char	*str;
+
+	str = (char *)content;
 	ft_putstr_fd("declare -x ", 1);
-	if (ft_strchr((char *)content, '='))
-	{
-		ft_putstr_fd("\"", 1);
-		ft_putstr_fd((char *)content, 1);
-		ft_putstr_fd("\"", 1);
-		ft_putstr_fd("\n", 1);
-	}
-	else
-	{
-		ft_putstr_fd((char *)content, 1);
-		ft_putstr_fd("\n", 1);
-	}
+	while (*str && *str != '=')
+		ft_putchar_fd(*str++, 1);
+	if (*str == '=')
+		ft_putchar_fd(*str++, 1);
+	ft_putchar_fd('"', 1);
+	while (*str)
+		ft_putchar_fd(*str++, 1);
+	ft_putchar_fd('"', 1);
+	ft_putchar_fd('\n', 1);
 }
 
 int			ft_export(char **var, t_list *env_var)

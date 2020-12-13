@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:21:42 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/10 16:08:00 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:14:10 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char			*get_exedir(char *exe, t_list *env_var)
 	free_arr(env_dir);
 	if (!exe_dir)
 	{
+		// q_mark = 127; !CHANGE
 		ft_putstr_fd(exe, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/12 18:40:08 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:50:39 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ typedef struct	s_sfunc
 	int			(*value)();
 }				t_sfunc;
 
-void	command_line(char *line, t_list *env_var);
+typedef struct	s_minishell
+{
+	t_list		*env_var;
+	int			q_mark;
+}				t_minishell;
+
+void	command_line(char *line, t_minishell *minishell);
 char	**exe_parser(char *str);
 int		free_str(void *tmp);
 void	skip_quotes(char *line, int *i);
@@ -62,14 +68,14 @@ t_list	*var_sort(t_list *env_var);
 int		ft_unset(char **var, t_list *env_var);
 int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
-int		ft_exit(char **var);
-int		func_checker(char **argv, t_list *env_var, int flag);
-void	put_env(void *content);
+int		ft_exit(char **var, t_minishell *minishell);
+int		func_checker(char **argv, t_minishell *minishell, int flag);
+// void	put_env(void *content);
 void	slash_handler();
 void	child_slash_handler();
 void	c_handler();
 void	ft_pass(void *p);
-//int		syntax_checker(char *str);
+//int		svar_checker(char *str);
 int		change_argv(char **argv, t_list *env_var);
 int		loop_change(char **main_str, char **argv, char **start, t_list *env_var);
 int		copy_set(char **main_str, char *argv, char *start);

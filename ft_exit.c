@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/10 04:45:48 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:27:31 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,18 @@ static int		exit_checker(char *ar)
 	return (1);
 }
 
-static int		ft_exiterr(char **var)
+static int	ft_exiterr(char **var)
 {
 	ft_stderr("exit: ", var[1], ": numeric argument required\n");
 	return (255);
 }
 
-int		ft_exit(char **var)
+int			ft_exit(char **var, t_minishell *minishell)
 {
 	int		i;
 
-	i = 0;
+	minishell->q_mark = 189;
+	i = minishell->q_mark;
 	ft_putstr_fd("exit\n", 1);
 	if (var[1])
 	{

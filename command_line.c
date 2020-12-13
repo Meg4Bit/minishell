@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 00:13:13 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:28:21 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int		error_msg(char *msg)
 	if (*msg)
 	{
 		ft_putstr_fd(msg, 2);
-		ft_putstr_fd(": ", 2);
 	}
+	if (*msg && errno)
+		ft_putstr_fd(": ", 2);
 	if (errno)
 		ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
@@ -147,7 +148,7 @@ int		open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
+int		command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 {
 	char	*name_prog;
 	char	**argv;
@@ -155,18 +156,18 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 	int		pip[2];
 	pid_t	pid;
 
-	if (!argv_setup(&argv, &redirect, *cl, env_var))
+	if (!argv_setup(&argv, &redirect, *cl, minishell->env_var))
 		return (error_msg("malloc"));
-	if (!name_setup(argv, &name_prog, env_var))
+	if (!name_setup(argv, &name_prog, minishell->env_var))
 		return (free_arr(redirect));
 	if (!open_fd(*cl, redirect, fd, pip))
 		return (free_arr(redirect));
 	signal(SIGQUIT, child_slash_handler);
 	if (argv[0])
 	{
-		if (func_checker(argv, env_var, 0))
+		if (func_checker(argv, minishell, 0))
 		{
-			if (!(func_checker(argv, env_var, 1)))
+			if (!(func_checker(argv, minishell, 1)))
 				return (0);
 		}
 		else
@@ -202,7 +203,7 @@ int		command_exec(t_list **cl, t_list *env_var, int *fd, int *fd_init)
 	return (1);
 }
 
-void	command_line(char *line, t_list *env_var)
+void	command_line(char *line, t_minishell *minishell)
 {
 	t_list	*cl;
 	t_list	*start;
@@ -217,7 +218,7 @@ void	command_line(char *line, t_list *env_var)
 	start = cl;
 	while (cl)
 	{
-		if (!command_exec(&cl, env_var, fd, fd_init))
+		if (!command_exec(&cl, minishell, fd, fd_init))
 			break;
 	}
 	close(fd_init[1]);
