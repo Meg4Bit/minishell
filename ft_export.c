@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set.c                                        :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/22 02:12:11 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/14 00:40:25 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_stderr(char *func, char *arg, char *err)
+void		ft_stderr(char *func, char *arg, char *err)
 {
 	ft_putstr_fd(func, 2);
 	ft_putstr_fd(arg, 2);
@@ -35,7 +35,7 @@ void		ft_set(char *key, char *value, t_list *env_var)
 	(void)list;
 }
 
-static void		put_export(void *content)
+static void	put_export(void *content)
 {
 	char	*str;
 

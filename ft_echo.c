@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:01:38 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/07 01:13:47 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:32:31 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	arg_checker(char **line)
 	return (i);
 }
 
-int		ft_echo(char **line)
+int			ft_echo(char **line)
 {
 	int		i;
 	int		flag;

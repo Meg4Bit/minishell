@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/22 02:12:11 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/14 00:41:27 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/14 00:41:49 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_diff(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	if(!s2[i])
+	if (!s2[i])
 		return (1);
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 	{
@@ -46,7 +46,7 @@ int			ft_unset(char **var, t_list *env_var)
 		if (ft_strchr(var[i], '='))
 		{
 			unset_err(var[i]);
-			break;
+			break ;
 		}
 		if ((rm = ft_lstfind(start, var[i], ft_diff)))
 			ft_lstrm(&start, rm, free_str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 01:49:45 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 13:11:45 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:40:55 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	pwd_err(char *dir)
 
 int			ft_pwd(char **dir)
 {
-	char		*wdir;
+	char	*wdir;
 
 	if (ft_arrlen(dir) == 1)
 	{
@@ -33,7 +33,6 @@ int			ft_pwd(char **dir)
 			pwd_err(dir[0]);
 			return (0);
 		}
-
 		else
 		{
 			ft_putstr_fd(wdir, 1);

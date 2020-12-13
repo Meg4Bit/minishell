@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 13:19:48 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:48:35 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_arrlen(char **arr)
+int			ft_arrlen(char **arr)
 {
-	int len;
+	int		len;
 
 	len = 0;
 	while (arr[len])
@@ -24,7 +24,7 @@ int		ft_arrlen(char **arr)
 	return (len);
 }
 
-int		free_arr(char **arr)
+int			free_arr(char **arr)
 {
 	int		i;
 
@@ -38,13 +38,13 @@ int		free_arr(char **arr)
 	return (0);
 }
 
-void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *))
+void		ft_arriter(char **arr, t_list *env_var,\
+				void (*func)(char *, t_list *))
 {
-	int i;
-	t_list *tmp;
+	int		i;
+	t_list	*tmp;
 
 	tmp = env_var;
-
 	i = 0;
 	while (arr[i])
 	{
@@ -53,7 +53,7 @@ void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *))
 	}
 }
 
-void	ft_pass(void *p)
+void		ft_pass(void *p)
 {
 	(void)p;
 }

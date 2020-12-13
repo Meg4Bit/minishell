@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set.c                                        :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/11/22 02:12:11 by tcarlena         ###   ########.fr       */
+/*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/14 00:32:02 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*path_checker(char *path, t_list *env_var)
+static char	*path_checker(char *path, t_list *env_var)
 {
-	char		*str;
+	char	*str;
 
 	if (path && path[0] == '-')
 		str = var_copy("OLDPWD", env_var);
@@ -27,9 +27,9 @@ static char		*path_checker(char *path, t_list *env_var)
 	return (str);
 }
 
-static char		*path_get(char *path, t_list *env_var)
+static char	*path_get(char *path, t_list *env_var)
 {
-	char		*str;
+	char	*str;
 
 	if (!path || path[0] == '\0' || path[0] == '-' || path[0] == '~')
 	{
@@ -44,9 +44,9 @@ static char		*path_get(char *path, t_list *env_var)
 	return (str);
 }
 
-static int			ft_cderr(char *path)
+static int	ft_cderr(char *path)
 {
-	char			*str;
+	char	*str;
 
 	if (!(str = ft_strjoin("cd: ", path)))
 		return (error_msg("malloc error"));
@@ -55,11 +55,11 @@ static int			ft_cderr(char *path)
 	return (0);
 }
 
-static	int	pwd_change(char *path, t_list *env_var)
+static int	pwd_change(char *path, t_list *env_var)
 {
-	char		*pwd_env;
-	char		*pwd_old;
-	int			i;
+	char	*pwd_env;
+	char	*pwd_old;
+	int		i;
 
 	pwd_old = var_get("PWD", env_var);
 	i = chdir(path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 18:45:29 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 01:01:28 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list	*list_parser(char *line);
 //int		add_data_list(t_list **commands, char *start, int len);
 int		ft_pwd(char **dir);
 int		ft_echo(char **line);
-int		ft_env(char ** argv, t_list *env_var);
+int		ft_env(char **argv, t_list *env_var);
 int		ft_export(char **var, t_list *env_var);
 t_list	*get_env(char **env);
 int		ft_arrlen(char **arr);
@@ -70,7 +70,6 @@ int		ft_cd(char **var, t_list *env_var);
 void	ft_stderr(char *func, char *arg, char *err);
 int		ft_exit(char **var, t_minishell *minishell);
 int		func_checker(char **argv, t_minishell *minishell, int flag);
-// void	put_env(void *content);
 void	slash_handler();
 void	child_slash_handler();
 void	c_handler();

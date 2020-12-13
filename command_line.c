@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 18:35:42 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:58:12 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		error_msg(char *msg)
+int			error_msg(char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (*msg)
@@ -28,14 +28,14 @@ int		error_msg(char *msg)
 	return (0);
 }
 
-int		free_str(void *tmp)
+int			free_str(void *tmp)
 {
 	if (tmp)
 		free(tmp);
 	return (0);
 }
 
-int		name_setup(char **argv, char **name_prog, t_list *env_var)
+int			name_setup(char **argv, char **name_prog, t_list *env_var)
 {
 	char	*exe_dir;
 	char	*tmp;
@@ -64,7 +64,7 @@ int		name_setup(char **argv, char **name_prog, t_list *env_var)
 	return (1);
 }
 
-int		argv_setup(char ***argv, char ***redirect, t_list *cl,\
+int			argv_setup(char ***argv, char ***redirect, t_list *cl,\
 											t_minishell *minishell)
 {
 	char	**tmp;
@@ -93,7 +93,7 @@ int		argv_setup(char ***argv, char ***redirect, t_list *cl,\
 	return (1);
 }
 
-int		open_redirect(char **redirect, int *fd)
+int			open_redirect(char **redirect, int *fd)
 {
 	char	*name;
 
@@ -133,7 +133,7 @@ int		open_redirect(char **redirect, int *fd)
 	return (1);
 }
 
-int		open_fd(t_list *cl, char **redirect, int *fd, int *pip)
+int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 {
 	if (cl->next && *(char *)(cl->next->content) == '|')
 	{
@@ -149,7 +149,7 @@ int		open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-int		command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
+int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 {
 	char	*name_prog;
 	char	**argv;
@@ -186,25 +186,25 @@ int		command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 			}
 		}
 	}
-		if (fd[0] != 0)
-			close(fd[0]);
-		if (fd[1] != 1)
-			close(fd[1]);
-		fd[0] = dup2(fd_init[0], 0);
-		fd[1] = dup2(fd_init[1], 1);
-		free_str(name_prog);
-		free_arr(argv);
-		if ((*cl)->next)
-		{
-			(*cl) = (*cl)->next;
-			if (*(char *)((*cl)->content) == '|')
-				fd[0] = pip[0];
-		}
+	if (fd[0] != 0)
+		close(fd[0]);
+	if (fd[1] != 1)
+		close(fd[1]);
+	fd[0] = dup2(fd_init[0], 0);
+	fd[1] = dup2(fd_init[1], 1);
+	free_str(name_prog);
+	free_arr(argv);
+	if ((*cl)->next)
+	{
 		(*cl) = (*cl)->next;
+		if (*(char *)((*cl)->content) == '|')
+			fd[0] = pip[0];
+	}
+	(*cl) = (*cl)->next;
 	return (1);
 }
 
-void	command_line(char *line, t_minishell *minishell)
+void		command_line(char *line, t_minishell *minishell)
 {
 	t_list	*cl;
 	t_list	*start;
@@ -220,7 +220,7 @@ void	command_line(char *line, t_minishell *minishell)
 	while (cl)
 	{
 		if (!command_exec(&cl, minishell, fd, fd_init))
-			break;
+			break ;
 	}
 	close(fd_init[1]);
 	close(fd_init[0]);

@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/07 01:30:42 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:45:55 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			var_checker(char *s1, char *s2)
 	int		len;
 
 	len = 0;
-	if(!s2[len])
+	if (!s2[len])
 		return (1);
 	while (s1[len] && s1[len] != '=')
 	{

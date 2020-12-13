@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   arr_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:59:56 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/12 02:47:30 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:54:42 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**copy_arr(char **arr)
+char		**copy_arr(char **arr)
 {
 	char	**new_arr;
 	int		len;
@@ -30,7 +30,7 @@ char	**copy_arr(char **arr)
 	return (start);
 }
 
-void	sort_argv(char **arr)
+void		sort_argv(char **arr)
 {
 	int		cur_index;
 	int		len;

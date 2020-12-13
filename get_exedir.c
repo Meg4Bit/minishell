@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_exedir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:21:42 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 14:14:10 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:44:03 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*dir_checker(char *exe, char *env_dir)
+static char			*dir_checker(char *exe, char *env_dir)
 {
 	DIR				*dirp;
-	struct dirent 	*sdir;
+	struct dirent	*sdir;
 
 	if (!(dirp = opendir(env_dir)))
 		return (0); // CHANGE
@@ -31,10 +31,10 @@ static char		*dir_checker(char *exe, char *env_dir)
 	return (0);
 }
 
-static char		*get_exepath(char *exe, char **env_dir)
+static char			*get_exepath(char *exe, char **env_dir)
 {
 	char			*path;
-	int 			i;
+	int				i;
 
 	i = -1;
 	//path = 0; // COUDL BE DELETED?
@@ -46,11 +46,11 @@ static char		*get_exepath(char *exe, char **env_dir)
 	return (0);
 }
 
-char			*get_exedir(char *exe, t_list *env_var)
+char				*get_exedir(char *exe, t_list *env_var)
 {
-	char		*exe_dir;
-	char		*var_path;
-	char		**env_dir;
+	char			*exe_dir;
+	char			*var_path;
+	char			**env_dir;
 
 	if (!(var_path = var_get("PATH", env_var)))
 		return (0);

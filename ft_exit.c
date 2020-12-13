@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 14:27:31 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:39:27 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		exit_checker(char *ar)
+static int	exit_checker(char *ar)
 {
 	while (*ar)
 	{
@@ -48,7 +48,7 @@ int			ft_exit(char **var, t_minishell *minishell)
 			i = i % 256;
 			if (i <= 0 && ft_strlen(var[1]) > 14)
 				i = ft_exiterr(var);
-		 }
+		}
 	}
 	exit(i);
 }

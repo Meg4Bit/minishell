@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   func_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 16:24:31 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 14:38:41 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:49:56 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		func_checker(char **argv, t_minishell *minishell, int flag)
+int			func_checker(char **argv, t_minishell *minishell, int flag)
 {
 	t_sfunc	*funct;
 	int		i;

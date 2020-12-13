@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 14:15:39 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:33:52 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 t_list		*get_env(char **env)
 {
@@ -36,7 +36,7 @@ t_list		*get_env(char **env)
 
 static void	put_env(void *content)
 {
-	char		*env_var;
+	char	*env_var;
 
 	env_var = (char *)content;
 	if (ft_strchr(env_var, '='))
@@ -46,7 +46,7 @@ static void	put_env(void *content)
 	}
 }
 
-int	ft_env(char ** argv, t_list *env_var)
+int			ft_env(char **argv, t_list *env_var)
 {
 	argv = NULL;
 	ft_lstiter(env_var, put_env);

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/13 14:50:25 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:47:28 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list 	*var_sort(t_list *env_var)
+t_list		*var_sort(t_list *env_var)
 {
-	t_list		*env_sorted;
+	t_list	*env_sorted;
 
 	env_sorted = 0;
 	while (env_var)
@@ -27,8 +27,8 @@ t_list 	*var_sort(t_list *env_var)
 
 static int	syntax_checker(char *str)
 {
-	int 		j;
-	int			i;
+	int		j;
+	int		i;
 
 	i = -1;
 	if (str[0] == '=')
@@ -47,9 +47,9 @@ static int	syntax_checker(char *str)
 
 void		var_handler(char *str, t_list *env_var)
 {
-	char		*key;
-	char		*value;
-	char 		*ptr;
+	char	*key;
+	char	*value;
+	char	*ptr;
 
 	if (syntax_checker(str))
 		return ;

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/03 14:33:07 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 19:21:06 by ametapod         ###   ########.fr       */
+/*   Created: 2020/12/14 00:53:21 by tcarlena          #+#    #+#             */
+/*   Updated: 2020/12/14 00:54:02 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	slash_handler()
+void			slash_handler(void)
 {
 	ft_putstr_fd("\b\b  \b\b", 1);
 }
 
-void	child_slash_handler()
+void			child_slash_handler(void)
 {
 	ft_putstr_fd("Quit\n", 1);
 }
 
-void	c_handler(int *ptr)
+void			c_handler(int *ptr)
 {
 	static int	*q_mark = NULL;
 
