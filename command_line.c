@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 14:28:21 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 18:35:42 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int		name_setup(char **argv, char **name_prog, t_list *env_var)
 	return (1);
 }
 
-int		argv_setup(char ***argv, char ***redirect, t_list *cl, t_list *env_var)
+int		argv_setup(char ***argv, char ***redirect, t_list *cl,\
+											t_minishell *minishell)
 {
 	char	**tmp;
 
@@ -84,7 +85,7 @@ int		argv_setup(char ***argv, char ***redirect, t_list *cl, t_list *env_var)
 	}
 	free(*argv);
 	*argv = tmp;
-	if (!change_argv(*argv, env_var) || !change_argv(*redirect, env_var))
+	if (!change_argv(*argv, minishell) || !change_argv(*redirect, minishell))
 	{
 		free_arr(*argv);
 		return (free_arr(*redirect));
@@ -156,8 +157,8 @@ int		command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 	int		pip[2];
 	pid_t	pid;
 
-	if (!argv_setup(&argv, &redirect, *cl, minishell->env_var))
-		return (error_msg("malloc"));
+	if (!argv_setup(&argv, &redirect, *cl, minishell))
+		return (error_msg("malloc error"));
 	if (!name_setup(argv, &name_prog, minishell->env_var))
 		return (free_arr(redirect));
 	if (!open_fd(*cl, redirect, fd, pip))
@@ -176,7 +177,7 @@ int		command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 				;
 			if (pid > 0)
 			{
-				wait(NULL);
+				wait(&(minishell->q_mark));
 			}
 			if (pid == 0)
 			{

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 14:50:39 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 18:45:29 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ void	child_slash_handler();
 void	c_handler();
 void	ft_pass(void *p);
 //int		svar_checker(char *str);
-int		change_argv(char **argv, t_list *env_var);
-int		loop_change(char **main_str, char **argv, char **start, t_list *env_var);
+int		change_argv(char **argv, t_minishell *minishell);
+int		loop_change(char **main_str, char **argv, char **start,\
+												t_minishell *minishell);
+int		question_env(char **main_str, char **argv, char **start, int q_mark);
 int		copy_set(char **main_str, char *argv, char *start);
 char	*get_exedir(char *exe, t_list *env_var);
 char	**exe_parser(char *str);

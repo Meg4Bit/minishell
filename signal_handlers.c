@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 14:33:07 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/03 15:22:13 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 19:21:06 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,15 @@ void	child_slash_handler()
 	ft_putstr_fd("Quit\n", 1);
 }
 
-void	c_handler()
+void	c_handler(int *ptr)
 {
-	ft_putstr_fd("\nprompt > ", 1);
+	static int	*q_mark = NULL;
+
+	if (q_mark == NULL)
+		q_mark = ptr;
+	else
+	{
+		*q_mark = 130;
+		ft_putstr_fd("\nprompt > ", 1);
+	}
 }

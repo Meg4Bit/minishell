@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:19:42 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/13 14:29:18 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 19:05:02 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		main(int argc, char **argv, char **env)
 
 
 	minishell.env_var = get_env(env);
-	minishell.q_mark = 0;
+	minishell.q_mark = 77;
+	c_handler(&minishell.q_mark);
 	while (1)
 	{
 		signal(SIGQUIT, slash_handler);

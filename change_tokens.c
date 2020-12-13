@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:36:28 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/10 20:29:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 17:46:30 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,25 @@ static int	slash_change(char **main_str, char **argv, char **start, int flag)
 }
 
 static int	paste_env(char **main_str, char **argv, char **start,\
-															t_list *env_var)
+												t_minishell *minishell)
 {
 	char	*key;
 	char	*tmp;
 
 	if (!copy_set(main_str, *argv, *start))
 		return (0);
-	*start = *argv;
-	(*argv)++;
+	*start = (*argv)++;
 	if (!(**argv) || **argv == '\\')
 		return (1);
+	if (**argv == '?')
+		return (question_env(main_str, argv, start, minishell->q_mark));
 	*start = *argv;
 	while (**argv && **argv != '\'' && **argv != '"' && **argv != '$' \
 		&& **argv != '\\')
 		(*argv)++;
 	if (!(key = ft_substr(*start, 0, *argv - *start)))
 		return (0);
-	if (!(tmp = var_get(key, env_var)))
+	if (!(tmp = var_get(key, minishell->env_var)))
 		tmp = "";
 	free(key);
 	if (!(key = ft_strjoin(*main_str, tmp)))
@@ -66,7 +67,7 @@ static int	quote_change(char **main_str, char **argv, char **start)
 }
 
 static int	dub_quote_change(char **main_str, char **argv, char **start,\
-															t_list *env_var)
+													t_minishell *minishell)
 {
 	if (!copy_set(main_str, *argv, *start))
 		return (0);
@@ -80,7 +81,7 @@ static int	dub_quote_change(char **main_str, char **argv, char **start,\
 		}
 		else if (**argv == '$')
 		{
-			if (!paste_env(main_str, argv, start, env_var))
+			if (!paste_env(main_str, argv, start, minishell))
 				return (0);
 		}
 		else
@@ -93,7 +94,7 @@ static int	dub_quote_change(char **main_str, char **argv, char **start,\
 }
 
 int			loop_change(char **main_str, char **argv, char **start,\
-															t_list *env_var)
+												t_minishell *minishell)
 {
 	if (**argv == '\'')
 	{
@@ -102,12 +103,12 @@ int			loop_change(char **main_str, char **argv, char **start,\
 	}
 	else if (**argv == '"')
 	{
-		if (!dub_quote_change(main_str, argv, start, env_var))
+		if (!dub_quote_change(main_str, argv, start, minishell))
 			return (free_str(*main_str));
 	}
 	else if (**argv == '$')
 	{
-		if (!paste_env(main_str, argv, start, env_var))
+		if (!paste_env(main_str, argv, start, minishell))
 			return (free_str(*main_str));
 	}
 	else if (**argv == '\\')

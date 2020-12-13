@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:05:59 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/12 21:33:11 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/13 17:56:06 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,29 @@ static char	*change_word(char *argv, t_list *env_var)
 	return (argv);
 }
 
-int			change_argv(char **argv, t_list *env_var)
+int			question_env(char **main_str, char **argv, char **start, int q_mark)
+{
+	char	*str;
+	char	*tmp;
+
+	*start = ++(*argv);
+	if (!(str = ft_itoa(q_mark)))
+		return (0);
+	if (!(tmp = ft_strjoin(*main_str, str)))
+		return (free_str(str));
+	free(*main_str);
+	free(str);
+	*main_str = tmp;
+	return (1);
+}
+
+int			change_argv(char **argv, t_minishell *minishell)
 {
 	char	*copy;
 
 	while (*argv)
 	{
-		if (!(copy = change_word(*argv, env_var)))
+		if (!(copy = change_word(*argv, minishell)))
 			return (0);
 		free(*argv);
 		*argv = copy;
