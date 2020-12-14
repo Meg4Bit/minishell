@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:58:12 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:06:40 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			error_msg(char *msg)
-{
-	ft_putstr_fd("minishell: ", 2);
-	if (*msg)
-	{
-		ft_putstr_fd(msg, 2);
-	}
-	if (*msg && errno)
-		ft_putstr_fd(": ", 2);
-	if (errno)
-		ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 2);
-	errno = 0;
-	return (0);
-}
-
-int			free_str(void *tmp)
-{
-	if (tmp)
-		free(tmp);
-	return (0);
-}
-
-int			name_setup(char **argv, char **name_prog, t_list *env_var)
+int			name_setup(char **argv, char **name_prog, t_minishell *minishell)
 {
 	char	*exe_dir;
 	char	*tmp;
@@ -49,10 +26,10 @@ int			name_setup(char **argv, char **name_prog, t_list *env_var)
 		if (*(argv[0])++ == '/')
 			path = 1;
 	argv[0] = tmp;
-	if (!func_checker(argv, env_var, 0) && !path)
+	if (!func_checker(argv, minishell, 0) && !path)
 	{
 		free(*name_prog);
-		if (!(exe_dir = get_exedir((argv)[0], env_var)))
+		if (!(exe_dir = get_exedir((argv)[0], minishell)))
 			return (free_arr(argv));
 		if (!(*name_prog = ft_strjoin(exe_dir, (argv)[0])))
 		{
@@ -159,11 +136,11 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 
 	if (!argv_setup(&argv, &redirect, *cl, minishell))
 		return (error_msg("malloc error"));
-	if (!name_setup(argv, &name_prog, minishell->env_var))
+	if (!name_setup(argv, &name_prog, minishell))
 		return (free_arr(redirect));
 	if (!open_fd(*cl, redirect, fd, pip))
 		return (free_arr(redirect));
-	signal(SIGQUIT, child_slash_handler);
+	// child_slash_handler);
 	if (argv[0])
 	{
 		if (func_checker(argv, minishell, 0))
@@ -173,17 +150,24 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 		}
 		else
 		{
+			signal(SIGQUIT, child_slash_handler);
+			signal(SIGINT, child_c_handler);
+			int		status;
 			if ((pid = fork()) == -1)
 				;
 			if (pid > 0)
 			{
-				wait(&(minishell->q_mark));
+				wait(&status);
 			}
 			if (pid == 0)
 			{
 				if (execve(name_prog, argv, NULL) == -1)
 					exit(127 + error_msg(name_prog));
 			}
+			if (!(minishell->q_mark = WTERMSIG(status)))
+				minishell->q_mark = WEXITSTATUS(status);
+			else
+				minishell->q_mark += 128;
 		}
 	}
 	if (fd[0] != 0)

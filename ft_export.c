@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:40:25 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:45:26 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static void	put_export(void *content)
 	while (*str && *str != '=')
 		ft_putchar_fd(*str++, 1);
 	if (*str == '=')
+	{
 		ft_putchar_fd(*str++, 1);
-	ft_putchar_fd('"', 1);
-	while (*str)
-		ft_putchar_fd(*str++, 1);
-	ft_putchar_fd('"', 1);
+		ft_putchar_fd('"', 1);
+		while (*str)
+			ft_putchar_fd(*str++, 1);
+		ft_putchar_fd('"', 1);
+	}
 	ft_putchar_fd('\n', 1);
 }
 
@@ -62,7 +64,7 @@ int			ft_export(char **var, t_list *env_var)
 	{
 		env_sorted = var_sort(env_var);
 		ft_lstiter(env_sorted, &put_export);
-		ft_lstclear(&env_sorted, &ft_pass);
+		ft_lstclear(&env_sorted, NULL);
 		return (1);
 	}
 	else

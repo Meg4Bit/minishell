@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:39:27 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:56:21 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			ft_exit(char **var, t_minishell *minishell)
 {
 	int		i;
 
-	minishell->q_mark = 189;
 	i = minishell->q_mark;
 	ft_putstr_fd("exit\n", 1);
 	if (var[1])

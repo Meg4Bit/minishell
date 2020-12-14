@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:41:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:41:49 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:58:38 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_unset(char **var, t_list *env_var)
 			break ;
 		}
 		if ((rm = ft_lstfind(start, var[i], ft_diff)))
-			ft_lstrm(&start, rm, free_str);
+			ft_lstrm(&start, rm, (void *)free_str);
 		i++;
 	}
 	return (1);

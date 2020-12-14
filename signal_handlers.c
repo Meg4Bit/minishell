@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:53:21 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:54:02 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:00:22 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,9 @@ void			c_handler(int *ptr)
 		*q_mark = 130;
 		ft_putstr_fd("\nprompt > ", 1);
 	}
+}
+
+void			child_c_handler(void)
+{
+	ft_putstr_fd("\n", 1);
 }

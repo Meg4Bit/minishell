@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 01:01:28 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:01:46 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ typedef struct	s_minishell
 
 void	command_line(char *line, t_minishell *minishell);
 char	**exe_parser(char *str);
+int		error_msg(char *msg);
 int		free_str(void *tmp);
 void	skip_quotes(char *line, int *i);
 t_list	*list_parser(char *line);
-//int		add_data_list(t_list **commands, char *start, int len);
 int		ft_pwd(char **dir);
 int		ft_echo(char **line);
 int		ft_env(char **argv, t_list *env_var);
@@ -72,15 +72,15 @@ int		ft_exit(char **var, t_minishell *minishell);
 int		func_checker(char **argv, t_minishell *minishell, int flag);
 void	slash_handler();
 void	child_slash_handler();
+void	child_c_handler();
 void	c_handler();
 void	ft_pass(void *p);
-//int		svar_checker(char *str);
 int		change_argv(char **argv, t_minishell *minishell);
 int		loop_change(char **main_str, char **argv, char **start,\
 												t_minishell *minishell);
 int		question_env(char **main_str, char **argv, char **start, int q_mark);
 int		copy_set(char **main_str, char *argv, char *start);
-char	*get_exedir(char *exe, t_list *env_var);
+char	*get_exedir(char *exe, t_minishell *minishell);
 char	**exe_parser(char *str);
 char	**copy_arr(char **arr);
 void	sort_argv(char **arr);

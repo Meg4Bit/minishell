@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:48:35 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/14 12:38:01 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,25 @@ void		ft_arriter(char **arr, t_list *env_var,\
 	}
 }
 
-void		ft_pass(void *p)
+int			error_msg(char *msg)
 {
-	(void)p;
+	ft_putstr_fd("minishell: ", 2);
+	if (*msg)
+	{
+		ft_putstr_fd(msg, 2);
+	}
+	if (*msg && errno)
+		ft_putstr_fd(": ", 2);
+	if (errno)
+		ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
+	errno = 0;
+	return (0);
+}
+
+int			free_str(void *tmp)
+{
+	if (tmp)
+		free(tmp);
+	return (0);
 }
