@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:47:28 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/15 00:42:10 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list		*var_sort(t_list *env_var)
 	return (env_sorted);
 }
 
-static int	syntax_checker(char *str)
+static int	env_syntax_checker(char *str)
 {
 	int		j;
 	int		i;
@@ -33,6 +33,11 @@ static int	syntax_checker(char *str)
 	i = -1;
 	if (str[0] == '=')
 		ft_stderr("export: ", str, ": not a valid identifier\n");
+	if (ft_isdigit(str[0]))
+	{
+		ft_stderr("export: ", str, ": not a valid identifier\n");
+		return (1);
+	}
 	while (str[++i] && str[i] != '=')
 	{
 		j = ft_isalnum(str[i]);
@@ -51,7 +56,7 @@ void		var_handler(char *str, t_list *env_var)
 	char	*value;
 	char	*ptr;
 
-	if (syntax_checker(str))
+	if (env_syntax_checker(str))
 		return ;
 	value = "";
 	if (!(ptr = ft_strchr(str, '=')))
