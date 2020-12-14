@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 21:09:58 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 21:31:34 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	slash_handler();
 void	child_slash_handler();
 void	child_c_handler();
 void	c_handler();
-void	ft_pass(void *p);
 int		change_argv(char **argv, t_minishell *minishell);
 int		loop_change(char **main_str, char **argv, char **start,\
 												t_minishell *minishell);

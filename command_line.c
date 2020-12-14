@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 21:18:42 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 21:40:41 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,13 @@ int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 int			execution(char **argv, char *name_prog, t_minishell *minishell)
 {
 	pid_t	pid;
+	char	**env_var;
 
 	if (argv[0])
 	{
 		if (func_checker(argv, minishell, 0))
 		{
+			free(name_prog);
 			if (!(func_checker(argv, minishell, 1)))
 				return ((minishell->q_mark = 1) - 1);
 			minishell->q_mark = 0;
@@ -146,6 +148,8 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 			signal(SIGQUIT, child_slash_handler);
 			signal(SIGINT, child_c_handler);
 			int		status;
+			if (!(env_var = ft_lsttoarr(minishell->env_var)))
+				return (error_msg("malloc error"));
 			if ((pid = fork()) == -1)
 				;
 			if (pid > 0)
@@ -154,15 +158,16 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 			}
 			if (pid == 0)
 			{
-				if (execve(name_prog, argv, NULL) == -1)
+				if (execve(name_prog, argv, env_var) == -1)
 					exit(127 + error_msg(name_prog));
 			}
+			free(env_var);
 			if (!(minishell->q_mark = WTERMSIG(status)))
 				minishell->q_mark = WEXITSTATUS(status);
 			else
 				minishell->q_mark += 128;
+			free_str(name_prog);
 		}
-		free_str(name_prog);
 	}
 	return (1);
 }
