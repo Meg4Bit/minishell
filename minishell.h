@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 14:01:46 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 21:09:58 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@
 # include <dirent.h>
 # include "libft/libft.h"
 
-typedef struct	s_fd
-{
-	int			fd0;
-	int			fd1;
-}				t_fd;
-
 typedef struct	s_sfunc
 {
 	char		*key;
@@ -40,6 +34,10 @@ typedef struct	s_minishell
 {
 	t_list		*env_var;
 	int			q_mark;
+	int			*fd;
+	int			*fd_init;
+	t_list		*cl;
+	char		*line;
 }				t_minishell;
 
 void	command_line(char *line, t_minishell *minishell);

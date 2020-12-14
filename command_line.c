@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 14:06:40 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 21:18:42 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,32 +121,25 @@ int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	if (!open_redirect(redirect, fd))
 		return (0);
 	free_arr(redirect);
-	dup2(fd[0], 0);
-	dup2(fd[1], 1);
+	redirect = NULL;
+	if (dup2(fd[0], 0) == -1)
+		return (error_msg(""));
+	if (dup2(fd[1], 1) == -1)
+		return (error_msg(""));
 	return (1);
 }
 
-int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
+int			execution(char **argv, char *name_prog, t_minishell *minishell)
 {
-	char	*name_prog;
-	char	**argv;
-	char	**redirect;
-	int		pip[2];
 	pid_t	pid;
 
-	if (!argv_setup(&argv, &redirect, *cl, minishell))
-		return (error_msg("malloc error"));
-	if (!name_setup(argv, &name_prog, minishell))
-		return (free_arr(redirect));
-	if (!open_fd(*cl, redirect, fd, pip))
-		return (free_arr(redirect));
-	// child_slash_handler);
 	if (argv[0])
 	{
 		if (func_checker(argv, minishell, 0))
 		{
 			if (!(func_checker(argv, minishell, 1)))
-				return (0);
+				return ((minishell->q_mark = 1) - 1);
+			minishell->q_mark = 0;
 		}
 		else
 		{
@@ -169,14 +162,39 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 			else
 				minishell->q_mark += 128;
 		}
+		free_str(name_prog);
 	}
+	return (1);
+}
+
+int			close_fd(int *fd, int *fd_init)
+{
 	if (fd[0] != 0)
 		close(fd[0]);
 	if (fd[1] != 1)
 		close(fd[1]);
 	fd[0] = dup2(fd_init[0], 0);
 	fd[1] = dup2(fd_init[1], 1);
-	free_str(name_prog);
+	return (0);
+}
+
+int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
+{
+	char	*name_prog;
+	char	**argv;
+	char	**redirect;
+	int		pip[2];
+
+	if (!argv_setup(&argv, &redirect, *cl, minishell))
+		return (error_msg("malloc error"));
+	if (argv[0])
+		if (!name_setup(argv, &name_prog, minishell))
+			return (free_arr(redirect));
+	if (!open_fd(*cl, redirect, fd, pip))
+		return (free_arr(redirect) + free_str(name_prog) + free_arr(argv) + close_fd(fd, fd_init));
+	if (!execution(argv, name_prog, minishell))
+		return (free_arr(argv) + free_str(name_prog) + close_fd(fd, fd_init));
+	close_fd(fd, fd_init);
 	free_arr(argv);
 	if ((*cl)->next)
 	{
@@ -191,7 +209,6 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 void		command_line(char *line, t_minishell *minishell)
 {
 	t_list	*cl;
-	t_list	*start;
 	int		fd[2];
 	int		fd_init[2];
 
@@ -199,14 +216,24 @@ void		command_line(char *line, t_minishell *minishell)
 	fd[1] = 1;
 	fd_init[1] = dup(fd[1]);
 	fd_init[0] = dup(fd[0]);
+	minishell->fd = fd;
+	minishell->fd_init = fd_init;
 	cl = list_parser(line);
-	start = cl;
+	minishell->cl = cl;
 	while (cl)
 	{
 		if (!command_exec(&cl, minishell, fd, fd_init))
-			break ;
+		{
+			if (cl->next && *(char *)(cl->content) == ';')
+				continue ;
+			else
+				break ;
+		}
 	}
 	close(fd_init[1]);
 	close(fd_init[0]);
-	ft_lstclear(&start, (void *)free_str);
+	ft_lstclear(&(minishell->cl), (void *)free_str);
+	minishell->fd = 0;
+	minishell->fd_init = 0;
+	minishell->cl = 0;
 }

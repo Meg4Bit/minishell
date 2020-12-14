@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 12:56:21 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/14 21:28:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,42 @@ static int	ft_exiterr(char **var)
 	return (255);
 }
 
+static void	free_minishell(t_minishell *minishell)
+{
+	free(minishell->line);
+	ft_lstclear(&minishell->env_var, free);
+	if (minishell->cl)
+		ft_lstclear(&minishell->cl, free);
+	if (minishell->fd)
+		close_fd(minishell->fd, minishell->fd_init);
+	if (minishell->fd_init)
+	{
+		close(minishell->fd_init[1]);
+		close(minishell->fd_init[0]);
+	}
+}
+
 int			ft_exit(char **var, t_minishell *minishell)
 {
 	int		i;
 
 	i = minishell->q_mark;
 	ft_putstr_fd("exit\n", 1);
-	if (var[1])
+	if (var)
 	{
-		if (!exit_checker(var[1]))
-			i = ft_exiterr(var);
-		else
+		if (var[1])
 		{
-			i = ft_atoi(var[1]);
-			i = i % 256;
-			if (i <= 0 && ft_strlen(var[1]) > 14)
+			if (!exit_checker(var[1]))
 				i = ft_exiterr(var);
+			else
+			{
+				i = ft_atoi(var[1]) % 256;
+				if (i <= 0 && ft_strlen(var[1]) > 14)
+					i = ft_exiterr(var);
+			}
 		}
+		free_arr(var);
 	}
+	free_minishell(minishell);
 	exit(i);
 }
