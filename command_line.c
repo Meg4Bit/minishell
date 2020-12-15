@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 16:39:33 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:45:38 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,14 @@ int			open_redirect(char **redirect, int *fd)
 			{
 				while (*(++name) == ' ')
 					;
-				if ((fd[1] = open(name, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR)) == -1)
+				if ((fd[1] = open(name, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU)) == -1)
 					return (error_msg(name));
 			}
 			else
 			{
 				while (*name == ' ')
 					name++;
-				if ((fd[1] = open(name, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
+				if ((fd[1] = open(name, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU)) == -1)
 					return (error_msg(name));
 			}
 		}
