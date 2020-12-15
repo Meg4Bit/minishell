@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:36:28 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:55:16 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/15 11:37:16 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ static int	paste_env(char **main_str, char **argv, char **start,\
 	*start = (*argv)++;
 	if (!(**argv) || **argv == '\\')
 		return (1);
-	if (**argv == '?')
+	if (**argv == '?' || ft_isdigit(**argv))
 		return (question_env(main_str, argv, start, minishell->q_mark));
 	*start = *argv;
-	while (**argv && **argv != '\'' && **argv != '"' && **argv != '$' \
-		&& **argv != '\\')
+	while (ft_isalnum(**argv) || **argv == '_')
 		(*argv)++;
 	if (!(key = ft_substr(*start, 0, *argv - *start)))
 		return (0);

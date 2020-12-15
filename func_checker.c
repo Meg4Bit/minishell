@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 16:24:31 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:49:56 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/15 12:03:27 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			func_checker(char **argv, t_minishell *minishell, int flag)
 	};
 	while (funct[++i].key)
 	{
-		if (!ft_strncmp(funct[i].key, argv[0], ft_strlen(argv[0])))
+		if (!ft_strcmp(funct[i].key, argv[0]))
 		{
 			if (flag && !(funct[i].value(argv, (!ft_strcmp(argv[0], "exit")\
 						? (void *)minishell : (void *)minishell->env_var))))

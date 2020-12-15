@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 21:40:41 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/15 12:19:46 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 	char	**redirect;
 	int		pip[2];
 
+	name_prog = 0;
 	if (!argv_setup(&argv, &redirect, *cl, minishell))
 		return (error_msg("malloc error"));
 	if (argv[0])
@@ -225,7 +226,7 @@ void		command_line(char *line, t_minishell *minishell)
 	minishell->fd_init = fd_init;
 	cl = list_parser(line);
 	minishell->cl = cl;
-	while (cl)
+	while (cl && *(char *)(cl->content))
 	{
 		if (!command_exec(&cl, minishell, fd, fd_init))
 		{

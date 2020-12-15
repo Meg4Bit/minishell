@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:05:59 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:55:33 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/15 11:14:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ int			question_env(char **main_str, char **argv, char **start, int q_mark)
 	char	*str;
 	char	*tmp;
 
+	if (**argv == '?')
+	{
+		if (!(str = ft_itoa(q_mark)))
+			return (0);
+		if (!(tmp = ft_strjoin(*main_str, str)))
+			return (free_str(str));
+		free(*main_str);
+		free(str);
+		*main_str = tmp;
+	}
 	*start = ++(*argv);
-	if (!(str = ft_itoa(q_mark)))
-		return (0);
-	if (!(tmp = ft_strjoin(*main_str, str)))
-		return (free_str(str));
-	free(*main_str);
-	free(str);
-	*main_str = tmp;
 	return (1);
 }
 
