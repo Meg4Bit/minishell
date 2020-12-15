@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 21:31:34 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/15 15:08:12 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct	s_minishell
 {
 	t_list		*env_var;
 	int			q_mark;
-	int			*fd;
+	int			fd[2];
 	int			*fd_init;
 	t_list		*cl;
 	char		*line;

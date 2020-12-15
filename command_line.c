@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 12:19:46 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:39:33 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,16 +151,12 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 			if (!(env_var = ft_lsttoarr(minishell->env_var)))
 				return (error_msg("malloc error"));
 			if ((pid = fork()) == -1)
-				;
+				return (error_msg(""));
 			if (pid > 0)
-			{
 				wait(&status);
-			}
 			if (pid == 0)
-			{
 				if (execve(name_prog, argv, env_var) == -1)
 					exit(127 + error_msg(name_prog));
-			}
 			free(env_var);
 			if (!(minishell->q_mark = WTERMSIG(status)))
 				minishell->q_mark = WEXITSTATUS(status);
@@ -183,7 +179,8 @@ int			close_fd(int *fd, int *fd_init)
 	return (0);
 }
 
-int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
+int			command_exec(t_list **cl, t_minishell *minishell, int *fd,\
+															int *fd_init)
 {
 	char	*name_prog;
 	char	**argv;
@@ -197,7 +194,7 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 		if (!name_setup(argv, &name_prog, minishell))
 			return (free_arr(redirect));
 	if (!open_fd(*cl, redirect, fd, pip))
-		return (free_arr(redirect) + free_str(name_prog) + free_arr(argv) + close_fd(fd, fd_init));
+		return (free_str(name_prog) + free_arr(argv) + close_fd(fd, fd_init));
 	if (!execution(argv, name_prog, minishell))
 		return (free_arr(argv) + free_str(name_prog) + close_fd(fd, fd_init));
 	close_fd(fd, fd_init);
@@ -215,31 +212,26 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd, int *fd_init)
 void		command_line(char *line, t_minishell *minishell)
 {
 	t_list	*cl;
-	int		fd[2];
 	int		fd_init[2];
 
-	fd[0] = 0;
-	fd[1] = 1;
-	fd_init[1] = dup(fd[1]);
-	fd_init[0] = dup(fd[0]);
-	minishell->fd = fd;
+	fd_init[1] = dup(minishell->fd[1]);
+	fd_init[0] = dup(minishell->fd[0]);
 	minishell->fd_init = fd_init;
 	cl = list_parser(line);
 	minishell->cl = cl;
 	while (cl && *(char *)(cl->content))
 	{
-		if (!command_exec(&cl, minishell, fd, fd_init))
+		if (!command_exec(&cl, minishell, minishell->fd, minishell->fd_init))
 		{
 			if (cl->next && *(char *)(cl->content) == ';')
 				continue ;
-			else
-				break ;
+			break ;
 		}
 	}
-	close(fd_init[1]);
-	close(fd_init[0]);
+	close_fd(minishell->fd, fd_init);
+	close(minishell->fd_init[1]);
+	close(minishell->fd_init[0]);
 	ft_lstclear(&(minishell->cl), (void *)free_str);
-	minishell->fd = 0;
 	minishell->fd_init = 0;
 	minishell->cl = 0;
 }
