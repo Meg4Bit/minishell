@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 13:05:10 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:58:43 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char	*path_checker(char *path, t_list *env_var)
 {
 	char	*str;
 
+	str = NULL;
 	if (path && path[0] == '-')
 		str = var_copy("OLDPWD", env_var);
 	if (!path || path[0] == '~' || path[0] == '\0' || !str)

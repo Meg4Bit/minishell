@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:19:42 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 00:14:20 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:44:28 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int				main(int argc, char **argv, char **env)
 {
-	t_list		*env_var;
 	t_minishell	minishell;
 	int			res;
 
@@ -25,7 +24,7 @@ int				main(int argc, char **argv, char **env)
 	minishell.fd[1] = 1;
 	minishell.fd_init = 0;
 	c_handler(&minishell);
-	while (1)
+	while (argc && *argv)
 	{
 		minishell.line = 0;
 		signal(SIGQUIT, slash_handler);

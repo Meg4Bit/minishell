@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:59:56 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:54:42 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:16:01 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void		sort_argv(char **arr)
 			tmp = arr[arr_end];
 			arr[arr_end] = arr[cur_index];
 			current = cur_index;
-			while (current < arr_end - 1)
-				arr[current++] = arr[current + 1];
-			arr[current] = tmp;
+			while (current++ < arr_end - 1)
+				arr[current - 1] = arr[current];
+			arr[current - 1] = tmp;
 			len--;
 		}
 		else

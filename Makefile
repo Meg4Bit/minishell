@@ -22,7 +22,7 @@ SRC =   main.c\
 		create_argv.c\
 		arr_utils.c
 OBJ = $(SRC:.c=.o)
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: libfta $(NAME)
 

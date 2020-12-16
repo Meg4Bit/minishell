@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:05:59 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 13:00:00 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:05:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			copy_set(char **main_str, char *argv, char *start)
 	return (1);
 }
 
-static char	*change_word(char *argv, t_list *env_var)
+static char	*change_word(char *argv, t_minishell *minishell)
 {
 	char	*start;
 	char	*main_str;
@@ -37,11 +37,11 @@ static char	*change_word(char *argv, t_list *env_var)
 		return (0);
 	while (*argv)
 	{
-		if (!loop_change(&main_str, &argv, &start, env_var))
+		if (!loop_change(&main_str, &argv, &start, minishell))
 			return (0);
 	}
 	if (!(argv = ft_strjoin(main_str, start)))
-		return (free_str(&main_str));
+		return ((char *)((long)free_str(&main_str)));
 	free(main_str);
 	return (argv);
 }

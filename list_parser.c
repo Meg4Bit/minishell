@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 13:13:48 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:50:19 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		skip_quotes(char *line, int *i)
 
 int			syntax_checker(char *line)
 {
+	line += 1;
 	return (1);
 }
 

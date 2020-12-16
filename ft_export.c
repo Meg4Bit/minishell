@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 04:54:49 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:57:55 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ static void	put_export(void *content, int a)
 	char	*str;
 
 	str = (char *)content;
-	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd("declare -x ", a);
 	while (*str && *str != '=')
-		ft_putchar_fd(*str++, 1);
+		ft_putchar_fd(*str++, a);
 	if (*str == '=')
 	{
-		ft_putchar_fd(*str++, 1);
-		ft_putchar_fd('"', 1);
+		ft_putchar_fd(*str++, a);
+		ft_putchar_fd('"', a);
 		while (*str)
-			ft_putchar_fd(*str++, 1);
-		ft_putchar_fd('"', 1);
+			ft_putchar_fd(*str++, a);
+		ft_putchar_fd('"', a);
 	}
-	ft_putchar_fd('\n', 1);
+	ft_putchar_fd('\n', a);
 }
 
 int			ft_export(char **var, t_list *env_var)

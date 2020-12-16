@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:31:25 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 13:03:03 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:08:30 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ char		**exe_parser(char *str)
 	if (!(str = ft_strtrim_mod(str, ' ')))
 		return (NULL);
 	if (!(argv = (char **)malloc(sizeof(char *) * (argv_len(str) + 1))))
-		return ((char **)free_str(&str));
+		return ((char **)((long)free_str(&str)));
 	flag = (*str == '<' || *str == '>') ? 0 : 1;
 	if (!create_arr(argv, str, 0, flag))
 	{
 		free(str);
-		return ((char **)free_arr(argv));
+		return ((char **)((long)free_arr(argv)));
 	}
 	free(str);
 	return (argv);

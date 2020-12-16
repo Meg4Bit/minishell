@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:21:42 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 21:01:40 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:07:28 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char			*dir_checker(char *exe, char *env_dir)
 
 	if (!(dirp = opendir(env_dir)))
 		return (0);
-	while (sdir = readdir(dirp))
+	while ((sdir = readdir(dirp)))
 	{
 		if (!ft_strcmp(sdir->d_name, exe))
 		{
@@ -54,7 +54,7 @@ char				*get_exedir(char *exe, t_minishell *minishell)
 	if (!(var_path = var_get("PATH", minishell->env_var)))
 		return (0);
 	if (!(env_dir = ft_split(var_path, ':')))
-		return (error_msg("malloc"));
+		return ((char *)((long)error_msg("malloc")));
 	exe_dir = get_exepath(exe, env_dir);
 	free_arr(env_dir);
 	if (!exe_dir)
