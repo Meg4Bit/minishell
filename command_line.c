@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 16:45:38 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 01:26:01 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 	{
 		if (func_checker(argv, minishell, 0))
 		{
-			free(name_prog);
+			//free(name_prog); free(): double free detected in tcache 2
 			if (!(func_checker(argv, minishell, 1)))
 				return ((minishell->q_mark = 1) - 1);
 			minishell->q_mark = 0;

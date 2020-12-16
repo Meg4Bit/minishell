@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:45:55 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 05:34:31 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,17 @@ char		*var_copy(char *key, t_list *env_var)
 int			var_checker(char *s1, char *s2)
 {
 	int		len;
+	int		diff;
 
 	len = 0;
 	if (!s2[len])
 		return (1);
-	while (s1[len] && s1[len] != '=')
-	{
+	while (s2[len] && s2[len] != '=')
 		len++;
-	}
-	len = ft_memcmp(s1, s2, len);
-	if (len == 0)
-	{
+	diff = ft_memcmp(s1, s2, len);
+	//if (!diff && (s2[len++] == '='))
+	//	return (0);
+	if (!diff)
 		return (0);
-	}
 	return (1);
 }

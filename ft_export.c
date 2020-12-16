@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 23:44:52 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 04:54:49 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		ft_set(char *key, char *value, t_list *env_var)
 	(void)list;
 }
 
-static void	put_export(void *content)
+static void	put_export(void *content, int a)
 {
 	char	*str;
 
@@ -68,6 +68,7 @@ int			ft_export(char **var, t_list *env_var)
 		return (1);
 	}
 	else
-		ft_arriter(var + 1, env_var, &var_handler);
+		if (!(ft_arriter(var + 1, env_var, &var_handler)))
+			return (0);
 	return (1);
 }

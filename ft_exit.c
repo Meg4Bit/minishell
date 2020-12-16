@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 15:01:13 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 01:52:41 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	exit_checker(char *ar)
 
 static int	ft_exiterr(char **var)
 {
-	ft_stderr("exit: ", var[1], ": numeric argument required\n");
+	ft_stderr("minishell: exit: ", var[1], ": numeric argument required\n");
 	return (255);
 }
 

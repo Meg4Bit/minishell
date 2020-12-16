@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:33:52 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 02:22:20 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list		*get_env(char **env)
 	return (start);
 }
 
-static void	put_env(void *content)
+static void	put_env(void *content, int a)
 {
 	char	*env_var;
 
