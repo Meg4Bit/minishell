@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:41:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 15:22:11 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:37:15 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_diff(char *s1, char *s2)
 
 static void	unset_err(char *str)
 {
-	ft_putstr_fd("unset: ", 1);
+	ft_putstr_fd("minishell: unset: ", 1);
 	ft_putstr_fd(str, 1);
 	ft_putstr_fd(": invalid parameter name\n", 1);
 }
@@ -36,21 +36,24 @@ static void	unset_err(char *str)
 int			ft_unset(char **var, t_list *env_var)
 {
 	int		i;
+	int		fl;
 	t_list	*start;
 	t_list	*rm;
 
 	i = 0;
+	fl = 0;
 	start = env_var;
 	while (var[i])
 	{
 		if (ft_strchr(var[i], '='))
 		{
 			unset_err(var[i]);
+			fl = 1;
 			break ;
 		}
 		if ((rm = ft_lstfind(start, var[i], ft_diff)))
 			ft_lstrm(&start, rm, free);
 		i++;
 	}
-	return (1);
+	return (fl ? 0 : 1);
 }

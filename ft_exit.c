@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 13:06:19 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:37:16 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	exit_checker(char *ar)
 
 static int	ft_exiterr(char **var)
 {
-	ft_stderr("exit: ", var[1], ": numeric argument required\n");
+	ft_stderr("minishell: exit: ", var[1], ": numeric argument required\n");
 	return (255);
 }
 

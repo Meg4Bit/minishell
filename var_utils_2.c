@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 13:14:44 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:34:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	env_syntax_checker(char *str)
 
 	i = -1;
 	if (str[0] == '=')
-		ft_stderr("export: ", str, ": not a valid identifier\n");
+		ft_stderr("minishell: export: ", str, ": not a valid identifier\n");
 	if (ft_isdigit(str[0]))
 	{
-		ft_stderr("export: ", str, ": not a valid identifier\n");
+		ft_stderr("minishell: export: ", str, ": not a valid identifier\n");
 		return (1);
 	}
 	while (str[++i] && str[i] != '=')
@@ -43,21 +43,21 @@ static int	env_syntax_checker(char *str)
 		j = ft_isalnum(str[i]);
 		if (j == 0 && str[i] != '_')
 		{
-			ft_stderr("export: ", str, ": not a valid identifier\n");
+			ft_stderr("minishell: export: ", str, ": not a valid identifier\n");
 			return (1);
 		}
 	}
 	return (0);
 }
 
-void		var_handler(char *str, t_list *env_var)
+int		var_handler(char *str, t_list *env_var)
 {
 	char	*key;
 	char	*value;
 	char	*ptr;
 
 	if (env_syntax_checker(str))
-		return ;
+		return (0);
 	value = "";
 	if (!(ptr = ft_strchr(str, '=')))
 		ft_set(str, value, env_var);
@@ -69,4 +69,5 @@ void		var_handler(char *str, t_list *env_var)
 		free_str(&key);
 		free_str(&value);
 	}
+	return (1);
 }

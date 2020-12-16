@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 12:48:35 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:37:14 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		ft_export(char **var, t_list *env_var);
 t_list	*get_env(char **env);
 int		ft_arrlen(char **arr);
 int		free_arr(char **arr);
-void	ft_arriter(char **arr, t_list *env_var, void (*func)(char *, t_list *));
+int		ft_arriter(char **arr, t_list *env_var, int (*func)(char *, t_list *));
 t_list	*ft_lstfind(t_list *start, void *data, int (*func)());
 void	ft_set(char *key, char *value, t_list *env_var);
 int		var_checker(char *s1, char *s2);
@@ -61,7 +61,7 @@ void	var_add(char *key, char *value, t_list *env_var);
 void	var_mod(t_list *list, char *value);
 char	*var_get(char *key, t_list *env_var);
 char	*var_copy(char *key, t_list *env_var);
-void	var_handler(char *str, t_list *env_var);
+int		var_handler(char *str, t_list *env_var);
 t_list	*var_sort(t_list *env_var);
 int		ft_unset(char **var, t_list *env_var);
 int		ft_cd(char **var, t_list *env_var);
@@ -81,5 +81,6 @@ char	*get_exedir(char *exe, t_minishell *minishell);
 char	**exe_parser(char *str);
 char	**copy_arr(char **arr);
 void	sort_argv(char **arr);
+int		close_fd(int *fd, int *fd_init);
 
 #endif
