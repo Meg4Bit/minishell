@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 15:50:19 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:39:40 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ int			syntax_checker(char *line)
 	return (1);
 }
 
-t_list		*list_parser(char *line)
+t_list		*list_parser(char *line, t_list *commands)
 {
-	t_list	*commands;
 	char	*start;
 	int		i;
 
-	commands = NULL;
 	start = line;
 	i = 0;
 	if (!syntax_checker(line))

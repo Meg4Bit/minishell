@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 15:46:06 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:36:37 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void		command_line(char *line, t_minishell *minishell)
 	fd_init[1] = dup(minishell->fd[1]);
 	fd_init[0] = dup(minishell->fd[0]);
 	minishell->fd_init = fd_init;
-	cl = list_parser(line);
+	cl = list_parser(line, NULL);
 	minishell->cl = cl;
 	while (cl && *(char *)(cl->content))
 	{

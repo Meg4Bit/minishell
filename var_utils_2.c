@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 15:34:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:43:04 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	env_syntax_checker(char *str)
 	return (0);
 }
 
-int		var_handler(char *str, t_list *env_var)
+int			var_handler(char *str, t_list *env_var)
 {
 	char	*key;
 	char	*value;

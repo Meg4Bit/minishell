@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 15:57:55 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:39:00 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int			ft_export(char **var, t_list *env_var)
 		return (1);
 	}
 	else
+	{
 		if (!(ft_arriter(var + 1, env_var, &var_handler)))
 			return (0);
+	}
 	return (1);
 }

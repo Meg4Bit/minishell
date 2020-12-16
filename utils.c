@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:00:33 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:41:02 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			free_arr(char **arr)
 	return (0);
 }
 
-int		ft_arriter(char **arr, t_list *env_var,\
+int			ft_arriter(char **arr, t_list *env_var,\
 				int (*func)(char *, t_list *))
 {
 	int		i;
