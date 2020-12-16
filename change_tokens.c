@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:36:28 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 11:37:16 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 12:58:28 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,22 @@ int			loop_change(char **main_str, char **argv, char **start,\
 	if (**argv == '\'')
 	{
 		if (!quote_change(main_str, argv, start))
-			return (free_str(*main_str));
+			return (free_str(main_str));
 	}
 	else if (**argv == '"')
 	{
 		if (!dub_quote_change(main_str, argv, start, minishell))
-			return (free_str(*main_str));
+			return (free_str(main_str));
 	}
 	else if (**argv == '$')
 	{
 		if (!paste_env(main_str, argv, start, minishell))
-			return (free_str(*main_str));
+			return (free_str(main_str));
 	}
 	else if (**argv == '\\')
 	{
 		if (!slash_change(main_str, argv, start, 1))
-			return (free_str(*main_str));
+			return (free_str(main_str));
 	}
 	else
 		(*argv)++;

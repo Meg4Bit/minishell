@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 15:21:28 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 12:47:40 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int			error_msg(char *msg)
 	return (0);
 }
 
-int			free_str(void *tmp)
+int			free_str(void **tmp)
 {
-	if (tmp)
-		free(tmp);
-	tmp = NULL;
+	if (*tmp)
+		free(*tmp);
+	*tmp = NULL;
 	return (0);
 }

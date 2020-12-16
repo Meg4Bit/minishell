@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 20:15:53 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:13:48 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	add_data_list(t_list **commands, char *start, int len)
 	if (!(tmp = ft_substr(start, 0, len)))
 		return (error_msg("malloc error"));
 	if (!(add = ft_lstnew(tmp)))
-		return (free_str(tmp) + error_msg("malloc error"));
+		return (free_str(&tmp) + error_msg("malloc error"));
 	ft_lstadd_back(commands, add);
 	return (1);
 }

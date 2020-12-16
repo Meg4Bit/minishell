@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:05:59 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 11:14:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:00:00 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			copy_set(char **main_str, char *argv, char *start)
 	if (!(tmp = ft_substr(start, 0, argv - start)))
 		return (0);
 	if (!(copy = ft_strjoin(*main_str, tmp)))
-		return (free_str(tmp));
+		return (free_str(&tmp));
 	free(*main_str);
 	free(tmp);
 	*main_str = copy;
@@ -41,7 +41,7 @@ static char	*change_word(char *argv, t_list *env_var)
 			return (0);
 	}
 	if (!(argv = ft_strjoin(main_str, start)))
-		return (free_str(main_str));
+		return (free_str(&main_str));
 	free(main_str);
 	return (argv);
 }
@@ -56,7 +56,7 @@ int			question_env(char **main_str, char **argv, char **start, int q_mark)
 		if (!(str = ft_itoa(q_mark)))
 			return (0);
 		if (!(tmp = ft_strjoin(*main_str, str)))
-			return (free_str(str));
+			return (free_str(&str));
 		free(*main_str);
 		free(str);
 		*main_str = tmp;

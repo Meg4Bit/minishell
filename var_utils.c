@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:45:55 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:14:48 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		var_mod(t_list *list, char *value)
 	if ((p = ft_strchr(list->content, '=')))
 		p[1] = '\0';
 	var_env = ft_strjoin(list->content, value);
-	free_str(list->content);
+	free_str(&list->content);
 	list->content = var_env;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/15 16:45:38 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:27:15 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-int			execution(char **argv, char *name_prog, t_minishell *minishell)
+int			execution(char **argv, char **name_prog, t_minishell *minishell)
 {
 	pid_t	pid;
 	char	**env_var;
@@ -138,7 +138,7 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 	{
 		if (func_checker(argv, minishell, 0))
 		{
-			free(name_prog);
+			free_str(name_prog);
 			if (!(func_checker(argv, minishell, 1)))
 				return ((minishell->q_mark = 1) - 1);
 			minishell->q_mark = 0;
@@ -155,8 +155,8 @@ int			execution(char **argv, char *name_prog, t_minishell *minishell)
 			if (pid > 0)
 				wait(&status);
 			if (pid == 0)
-				if (execve(name_prog, argv, env_var) == -1)
-					exit(127 + error_msg(name_prog));
+				if (execve(*name_prog, argv, env_var) == -1)
+					exit(127 + error_msg(*name_prog));
 			free(env_var);
 			if (!(minishell->q_mark = WTERMSIG(status)))
 				minishell->q_mark = WEXITSTATUS(status);
@@ -194,9 +194,9 @@ int			command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 		if (!name_setup(argv, &name_prog, minishell))
 			return (free_arr(redirect));
 	if (!open_fd(*cl, redirect, fd, pip))
-		return (free_str(name_prog) + free_arr(argv) + close_fd(fd, fd_init));
-	if (!execution(argv, name_prog, minishell))
-		return (free_arr(argv) + free_str(name_prog) + close_fd(fd, fd_init));
+		return (free_str(&name_prog) + free_arr(argv) + close_fd(fd, fd_init));
+	if (!execution(argv, &name_prog, minishell))
+		return (free_arr(argv) + free_str(&name_prog) + close_fd(fd, fd_init));
 	close_fd(fd, fd_init);
 	free_arr(argv);
 	if ((*cl)->next)
@@ -231,7 +231,7 @@ void		command_line(char *line, t_minishell *minishell)
 	close_fd(minishell->fd, fd_init);
 	close(minishell->fd_init[1]);
 	close(minishell->fd_init[0]);
-	ft_lstclear(&(minishell->cl), (void *)free_str);
+	ft_lstclear(&(minishell->cl), free);
 	minishell->fd_init = 0;
 	minishell->cl = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:53:21 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 15:48:43 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 12:52:11 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			c_handler(t_minishell *ptr)
 	{
 		if (*line)
 		{
-			free_str(*line);
+			free_str(line);
 			if (!(*line = ft_strdup("")))
 				ft_exit(NULL, ptr);
 		}

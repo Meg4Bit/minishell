@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 00:42:10 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:14:44 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		var_handler(char *str, t_list *env_var)
 		key = ft_strndup(str, (ptr - str) + 1);
 		value = ft_strndup(ptr + 1, ft_strlen(ptr + 1));
 		ft_set(key, value, env_var);
-		free_str(key);
-		free_str(value);
+		free_str(&key);
+		free_str(&value);
 	}
 }

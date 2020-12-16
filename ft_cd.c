@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:32:02 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:05:10 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_cderr(char *path)
 	if (!(str = ft_strjoin("cd: ", path)))
 		return (error_msg("malloc error"));
 	error_msg(str);
-	free_str(str);
+	free_str(&str);
 	return (0);
 }
 
@@ -73,7 +73,7 @@ static int	pwd_change(char *path, t_list *env_var)
 			return (error_msg(""));
 		ft_set("OLDPWD", pwd_old, env_var);
 		ft_set("PWD", pwd_env, env_var);
-		free_str(pwd_env);
+		free(pwd_env);
 	}
 	return (1);
 }
@@ -92,7 +92,7 @@ int			ft_cd(char **var, t_list *env_var)
 		if (path)
 		{
 			if (!pwd_change(path, env_var))
-				return (free_str(path));
+				return (free_str(&path));
 			free(path);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 00:13:57 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 15:01:13 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:06:19 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_exiterr(char **var)
 
 static void	free_minishell(t_minishell *minishell)
 {
-	free_str(minishell->line);
+	free_str(&minishell->line);
 	ft_lstclear(&minishell->env_var, free);
 	if (minishell->cl)
 		ft_lstclear(&minishell->cl, free);

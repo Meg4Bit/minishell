@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 01:49:45 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/15 12:48:36 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:06:02 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			ft_pwd(char **dir)
 		else
 		{
 			ft_putstr_fd(wdir, 1);
-			free_str(wdir);
+			free_str(&wdir);
 		}
 	}
 	else

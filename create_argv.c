@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_argv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:31:25 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/14 00:59:10 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:03:03 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char		**exe_parser(char *str)
 	if (!(str = ft_strtrim_mod(str, ' ')))
 		return (NULL);
 	if (!(argv = (char **)malloc(sizeof(char *) * (argv_len(str) + 1))))
-		return ((char **)free_str(str));
+		return ((char **)free_str(&str));
 	flag = (*str == '<' || *str == '>') ? 0 : 1;
 	if (!create_arr(argv, str, 0, flag))
 	{
