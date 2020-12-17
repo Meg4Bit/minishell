@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:39:00 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/17 03:21:22 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void		ft_set(char *key, char *value, t_list *env_var)
 	{
 		var_add(key, value, env_var);
 	}
-	else if (value && ft_strlen(value))
+	//else if (list && ft_strlen(key))
+	else
 	{
 		var_mod(list, value);
 	}

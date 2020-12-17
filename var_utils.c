@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:01:48 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/17 04:41:24 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,31 @@ int			var_checker(char *s1, char *s2)
 	int		diff;
 
 	len = 0;
+	diff = 0;
 	if (!s2[len])
 		return (1);
-	while (s2[len] && s2[len] != '=')
-		len++;
-	diff = ft_memcmp(s1, s2, len);
-	//if (!diff && (s2[len++] == '='))
-	//	return (0);
+	if (!ft_strchr(s2, '=') && !s1)
+	{
+		while (s1[len] == s2[len])
+			len++;
+		diff = ft_memcmp(s1, s2, len);
+	}
+	else if (ft_strchr(s2, '=') && !ft_strchr(s1, '='))
+	{
+		while (s1[len])
+			len++;
+		diff = ft_memcmp(s1, s2, len);
+		if (!diff)
+			return (1);
+	}
+	else
+	{
+		while (s2[len])
+			len++;
+		diff = ft_memcmp(s1, s2, len);
+			if (!diff)
+		return (0);
+	}
 	if (!diff)
 		return (0);
 	return (1);
