@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 16:36:37 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/17 22:35:36 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			name_setup(char **argv, char **name_prog, t_minishell *minishell)
 	{
 		free(*name_prog);
 		if (!(exe_dir = get_exedir((argv)[0], minishell)))
-			return (free_arr(argv));
+			return (-1);
 		if (!(*name_prog = ft_strjoin(exe_dir, (argv)[0])))
 		{
 			free(exe_dir);
@@ -120,8 +120,6 @@ int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	}
 	if (!open_redirect(redirect, fd))
 		return (0);
-	free_arr(redirect);
-	redirect = NULL;
 	if (dup2(fd[0], 0) == -1)
 		return (error_msg(""));
 	if (dup2(fd[1], 1) == -1)
@@ -129,40 +127,57 @@ int			open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-int			execution(char **argv, char **name_prog, t_minishell *minishell)
+int			ft_execve(char **argv, char **name_prog, t_minishell *minishell)
 {
-	pid_t	pid;
+	int		status;
 	char	**env_var;
+	pid_t	pid;
 
-	if (argv[0])
+	signal(SIGQUIT, child_slash_handler);
+	signal(SIGINT, child_c_handler);
+	if (!(env_var = ft_lsttoarr(minishell->env_var)))
+		return (error_msg("malloc error"));
+	if ((pid = fork()) == -1)
+		return (error_msg(""));
+	if (pid > 0)
+		waitpid(-1, &status, WUNTRACED);
+	if (pid == 0)
+	{
+		if (execve(*name_prog, argv, env_var) == -1)
+			exit(127 + error_msg(*name_prog));
+	}
+	free(env_var);
+	if (!(minishell->q_mark = WTERMSIG(status)))
+		minishell->q_mark = WEXITSTATUS(status);
+	else
+		minishell->q_mark += 128;
+	free_str(name_prog);
+	return (1);
+}
+
+int			execution(char **argv, t_minishell *minishell)
+{
+	int		flag;
+	char	*name_prog;
+
+	if (!(flag = name_setup(argv, &name_prog, minishell)))
+		return (free_arr(argv));
+	if (flag == 1)
 	{
 		if (func_checker(argv, minishell, 0))
 		{
-			free_str(name_prog);
+			free_str(&name_prog);
 			if (!(func_checker(argv, minishell, 1)))
-				return ((minishell->q_mark = 1) - 1);
+				return ((minishell->q_mark = 1));
 			minishell->q_mark = 0;
 		}
 		else
 		{
-			signal(SIGQUIT, child_slash_handler);
-			signal(SIGINT, child_c_handler);
-			int		status;
-			if (!(env_var = ft_lsttoarr(minishell->env_var)))
-				return (error_msg("malloc error"));
-			if ((pid = fork()) == -1)
-				return (error_msg(""));
-			if (pid > 0)
-				wait(&status);
-			if (pid == 0)
-				if (execve(*name_prog, argv, env_var) == -1)
-					exit(127 + error_msg(*name_prog));
-			free(env_var);
-			if (!(minishell->q_mark = WTERMSIG(status)))
-				minishell->q_mark = WEXITSTATUS(status);
-			else
-				minishell->q_mark += 128;
-			free_str(name_prog);
+			if (!ft_execve(argv, &name_prog, minishell))
+			{
+				free_str(&name_prog);
+				ft_exit(argv, minishell);
+			}
 		}
 	}
 	return (1);
@@ -182,21 +197,16 @@ int			close_fd(int *fd, int *fd_init)
 int			command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 															int *fd_init)
 {
-	char	*name_prog;
 	char	**argv;
 	char	**redirect;
 	int		pip[2];
 
-	name_prog = 0;
 	if (!argv_setup(&argv, &redirect, *cl, minishell))
 		return (error_msg("malloc error"));
+	open_fd(*cl, redirect, fd, pip);
+	free_arr(redirect);
 	if (argv[0])
-		if (!name_setup(argv, &name_prog, minishell))
-			return (free_arr(redirect));
-	if (!open_fd(*cl, redirect, fd, pip))
-		return (free_str(&name_prog) + free_arr(argv) + close_fd(fd, fd_init));
-	if (!execution(argv, &name_prog, minishell))
-		return (free_arr(argv) + free_str(&name_prog) + close_fd(fd, fd_init));
+		execution(argv, minishell);
 	close_fd(fd, fd_init);
 	free_arr(argv);
 	if ((*cl)->next)
@@ -222,11 +232,7 @@ void		command_line(char *line, t_minishell *minishell)
 	while (cl && *(char *)(cl->content))
 	{
 		if (!command_exec(&cl, minishell, minishell->fd, minishell->fd_init))
-		{
-			if (cl->next && *(char *)(cl->content) == ';')
-				continue ;
-			break ;
-		}
+			ft_exit(NULL, minishell);
 	}
 	close_fd(minishell->fd, fd_init);
 	close(minishell->fd_init[1]);
