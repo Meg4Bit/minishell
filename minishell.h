@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 16:43:56 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:42:50 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_list			*ft_lstfind(t_list *start, void *data, int (*func)());
 void			ft_set(char *key, char *value, t_list *env_var);
 int				var_checker(char *s1, char *s2);
 void			var_add(char *key, char *value, t_list *env_var);
-void			var_mod(t_list *list, char *value);
+void			var_mod(t_list *list, char *key, char *value);
 char			*var_get(char *key, t_list *env_var);
 char			*var_copy(char *key, t_list *env_var);
 int				var_handler(char *str, t_list *env_var);

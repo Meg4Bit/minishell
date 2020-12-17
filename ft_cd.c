@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 15:58:43 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:03:45 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static char	*path_checker(char *path, t_list *env_var)
 	if (!path || path[0] == '~' || path[0] == '\0' || !str)
 		str = var_copy("HOME", env_var);
 	if (!str)
-	{
 		ft_stderr("cd: ", "HOME", " not set\n");
-	}
 	return (str);
 }
 
@@ -33,9 +31,7 @@ static char	*path_get(char *path, t_list *env_var)
 	char	*str;
 
 	if (!path || path[0] == '\0' || path[0] == '-' || path[0] == '~')
-	{
 		str = path_checker(path, env_var);
-	}
 	else
 	{
 		str = ft_strdup(path);
@@ -65,9 +61,7 @@ static int	pwd_change(char *path, t_list *env_var)
 	pwd_old = var_get("PWD", env_var);
 	i = chdir(path);
 	if (i == -1)
-	{
 		return (ft_cderr(path));
-	}
 	else
 	{
 		if (!(pwd_env = getcwd((char *)NULL, 0)))

@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/17 04:41:24 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:02:43 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,18 @@ void		var_add(char *key, char *value, t_list *env_var)
 	ft_lstadd_back(&env_var, list);
 }
 
-void		var_mod(t_list *list, char *value)
+void		var_mod(t_list *list, char *key, char *value)
 {
 	char	*p;
 	char	*var_env;
 
-	if ((p = ft_strchr(list->content, '=')))
+	if (!ft_strchr(list->content, '=') && ft_strchr(key, '='))
+	{
+		p = ft_strjoin(list->content, "=");
+		free(list->content);
+		list->content = p;
+	}
+	else if ((p = ft_strchr(list->content, '=')) && ft_strchr(key, '='))
 		p[1] = '\0';
 	var_env = ft_strjoin(list->content, value);
 	free_str((char **)&list->content);
@@ -81,36 +87,22 @@ char		*var_copy(char *key, t_list *env_var)
 
 int			var_checker(char *s1, char *s2)
 {
-	int		len;
-	int		diff;
+	int	i;
 
-	len = 0;
-	diff = 0;
-	if (!s2[len])
+	i = 0;
+	if (!s2[i])
 		return (1);
-	if (!ft_strchr(s2, '=') && !s1)
+	if (!ft_strchr(s2, '='))
 	{
-		while (s1[len] == s2[len])
-			len++;
-		diff = ft_memcmp(s1, s2, len);
+		if (!ft_strncmp(s2, s1, ft_strlen(s2)))
+			return (0);
 	}
-	else if (ft_strchr(s2, '=') && !ft_strchr(s1, '='))
+	else if (ft_strchr(s2, '='))
 	{
-		while (s1[len])
-			len++;
-		diff = ft_memcmp(s1, s2, len);
-		if (!diff)
-			return (1);
+		while (s2[i] && s2[i] != '=')
+			i++;
+		if (!ft_strncmp(s1, s2, i))
+			return (0);
 	}
-	else
-	{
-		while (s2[len])
-			len++;
-		diff = ft_memcmp(s1, s2, len);
-			if (!diff)
-		return (0);
-	}
-	if (!diff)
-		return (0);
 	return (1);
 }

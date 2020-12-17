@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/17 03:21:22 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:59:50 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ void		ft_set(char *key, char *value, t_list *env_var)
 
 	list = ft_lstfind(env_var, key, &var_checker);
 	if (!list)
-	{
 		var_add(key, value, env_var);
-	}
-	//else if (list && ft_strlen(key))
 	else
-	{
-		var_mod(list, value);
-	}
+		var_mod(list, key, value);
 	(void)list;
 }
 
