@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 01:42:50 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/18 22:57:55 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,10 @@ char			**exe_parser(char *str);
 char			**copy_arr(char **arr);
 void			sort_argv(char **arr);
 int				close_fd(int *fd, int *fd_init);
+int				name_setup(char **argv, char **name_prog,\
+												t_minishell *minishell);
+int				open_redirect(char **redirect, int *fd);
+int				ft_execve(char **argv, char **name_prog,\
+												t_minishell *minishell);
 
 #endif

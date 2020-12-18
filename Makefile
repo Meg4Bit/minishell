@@ -20,15 +20,16 @@ SRC =   main.c\
 		get_exedir.c\
 		change_tokens.c\
 		create_argv.c\
-		arr_utils.c
+		arr_utils.c\
+		cl_utils.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 all: libfta $(NAME)
 
 $(NAME): $(OBJ)
-	#$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
-	$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
+	$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
+	#$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
 
 libfta:
 	@cd $(LIB) && make
