@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:21:42 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:07:28 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:10:45 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char				*get_exedir(char *exe, t_minishell *minishell)
 	char			**env_dir;
 
 	if (!(var_path = var_get("PATH", minishell->env_var)))
-		return (0);
+		return (exe);
 	if (!(env_dir = ft_split(var_path, ':')))
 		return ((char *)((long)error_msg("malloc")));
 	exe_dir = get_exepath(exe, env_dir);

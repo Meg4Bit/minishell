@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 22:45:56 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:32:38 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,24 @@ static int	argv_setup(char ***argv, char ***redirect, t_list *cl,\
 	char	**tmp;
 
 	if (!(*argv = exe_parser((char *)cl->content)))
-		return (error_msg("malloc"));
+		return (0);
 	sort_argv(*argv);
 	tmp = *argv;
 	while (*tmp && **tmp != '>' && **tmp != '<')
 		tmp++;
 	if (!(*redirect = copy_arr(tmp)))
-		return ((int)free_arr(*argv));
+		return (free_arr(*argv));
 	*tmp = NULL;
 	if (!(tmp = copy_arr(*argv)))
-	{
-		free_arr(*argv);
-		return ((int)free_arr(*redirect));
-	}
+		return (free_arr(*argv) + free_arr(*redirect));
 	free(*argv);
 	*argv = tmp;
 	if (!change_argv(*argv, minishell) || !change_argv(*redirect, minishell))
-	{
-		free_arr(*argv);
-		return (free_arr(*redirect));
-	}
+		return (free_arr(*argv) + free_arr(*redirect));
+	if (!(tmp = copy_arr(*argv)))
+		return (free_arr(*argv) + free_arr(*redirect));
+	free(*argv);
+	*argv = tmp;
 	return (1);
 }
 
@@ -64,8 +62,8 @@ static int	execution(char **argv, t_minishell *minishell)
 	char	*name_prog;
 
 	if (!(flag = name_setup(argv, &name_prog, minishell)))
-		return (free_arr(argv));
-	if (flag == 1)
+		ft_exit(argv, minishell);
+	else if (flag == 1)
 	{
 		if (func_checker(argv, minishell, 0))
 		{

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 22:05:13 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 22:57:24 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:35:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			name_setup(char **argv, char **name_prog, t_minishell *minishell)
 	int		path;
 
 	if (!(*name_prog = ft_strdup(*argv)))
-		return (free_arr(argv) + error_msg("malloc"));
+		return (error_msg("malloc"));
 	path = 0;
 	tmp = argv[0];
 	while (*argv[0])
@@ -39,15 +39,15 @@ int			name_setup(char **argv, char **name_prog, t_minishell *minishell)
 	argv[0] = tmp;
 	if (!func_checker(argv, minishell, 0) && !path)
 	{
-		free(*name_prog);
-		if (!(exe_dir = get_exedir((argv)[0], minishell)))
-			return (-1);
-		if (!(*name_prog = ft_strjoin(exe_dir, (argv)[0])))
+		if (!(exe_dir = get_exedir(*name_prog, minishell)))
+			return (free_str(name_prog) - 1);
+		if (exe_dir != *name_prog)
 		{
+			free_str(name_prog);
+			if (!(*name_prog = ft_strjoin(exe_dir, (argv)[0])))
+				return (free_str(&exe_dir) + error_msg("malloc"));
 			free(exe_dir);
-			return (free_arr(argv) + error_msg("malloc"));
 		}
-		free(exe_dir);
 	}
 	return (1);
 }
