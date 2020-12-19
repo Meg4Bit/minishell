@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 23:01:18 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 00:26:42 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_list		*list_parser(char *line, t_list *commands)
 			if (!add_data_list(&commands, start++, 1))
 				return (ft_lstclear(&commands, free));
 		}
-		i += line[i] ? 1 : 0;
+		i += line[i] && line[i] != '\\' ? 1 : 0;
 	}
 	if (!add_data_list(&commands, start, (int)ft_strlen(start)))
 		return (ft_lstclear(&commands, free));
