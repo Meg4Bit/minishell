@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/18 01:59:50 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/19 03:46:21 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,23 @@ static void	put_export(void *content, int a)
 int			ft_export(char **var, t_list *env_var)
 {
 	int		len;
+	int		i;
+	int		fl;
 	t_list	*env_sorted;
 
+	fl = 0;
+	i = 0;
 	len = ft_arrlen(var);
 	if (len == 1)
 	{
 		env_sorted = var_sort(env_var);
 		ft_lstiter(env_sorted, &put_export);
 		ft_lstclear(&env_sorted, NULL);
-		return (1);
 	}
 	else
 	{
-		if (!(ft_arriter(var + 1, env_var, &var_handler)))
-			return (0);
+		while (++i < len)
+			fl += (ft_arriter(var[i], env_var, &var_handler));
 	}
-	return (1);
+	return (fl != (len - 1) ? 0 : 1);
 }

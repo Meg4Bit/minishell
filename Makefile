@@ -29,8 +29,8 @@ CFLAGS = -Wall -Wextra -Werror
 all: libfta $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
-	#$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
+	#$(CC) $(OBJ) -L$(LIB) -lft -L/usr/lib -lm -lbsd -o $(NAME)
+	$(CC) $(OBJ) -L$(LIB) -lft -lm -o $(NAME)
 
 libfta:
 	@cd $(LIB) && make
