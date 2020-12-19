@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/19 04:59:15 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/19 13:28:23 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static int	pwd_change(char *path, t_list *env_var)
 	{
 		if (!(pwd_env = getcwd((char *)NULL, 0)))
 			return (error_msg(""));
-		ft_set("OLDPWD", pwd_old, env_var);
-		ft_set("PWD", pwd_env, env_var);
+		ft_set("OLDPWD=", pwd_old, env_var);
+		ft_set("PWD=", pwd_env, env_var);
 		free(pwd_env);
 	}
 	return (1);
