@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:43:04 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 03:51:05 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	env_syntax_checker(char *str)
 
 	i = -1;
 	if (str[0] == '=')
+	{
 		ft_stderr("minishell: export: ", str, ": not a valid identifier\n");
+		return (1);
+	}
 	if (ft_isdigit(str[0]))
 	{
 		ft_stderr("minishell: export: ", str, ": not a valid identifier\n");

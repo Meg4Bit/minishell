@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 22:57:55 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 03:40:26 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				ft_export(char **var, t_list *env_var);
 t_list			*get_env(char **env);
 int				ft_arrlen(char **arr);
 int				free_arr(char **arr);
-int				ft_arriter(char **arr, t_list *env_var,\
+int				ft_arriter(char *arr, t_list *env_var,\
 											int (*func)(char *, t_list *));
 t_list			*ft_lstfind(t_list *start, void *data, int (*func)());
 void			ft_set(char *key, char *value, t_list *env_var);

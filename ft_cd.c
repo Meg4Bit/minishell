@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/18 02:03:45 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/19 04:59:15 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*path_checker(char *path, t_list *env_var)
 	if (!path || path[0] == '~' || path[0] == '\0' || !str)
 		str = var_copy("HOME", env_var);
 	if (!str)
-		ft_stderr("cd: ", "HOME", " not set\n");
+		return ((char *)((long)error_msg("cd: HOME not set")));
 	return (str);
 }
 

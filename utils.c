@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
+/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 02:25:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/16 16:41:02 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/19 03:44:33 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,14 @@ int			free_arr(char **arr)
 	return (0);
 }
 
-int			ft_arriter(char **arr, t_list *env_var,\
+int			ft_arriter(char *arr, t_list *env_var,\
 				int (*func)(char *, t_list *))
 {
-	int		i;
 	t_list	*tmp;
 
 	tmp = env_var;
-	i = 0;
-	while (arr[i])
-	{
-		if (!((*func)(arr[i], tmp)))
-			return (0);
-		i++;
-	}
+	if (!((*func)(arr, tmp)))
+		return (0);
 	return (1);
 }
 
