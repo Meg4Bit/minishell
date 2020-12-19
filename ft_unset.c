@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:41:27 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/18 02:04:36 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/19 14:39:16 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,22 @@ static void	unset_err(char *str)
 {
 	ft_putstr_fd("minishell: unset: ", 1);
 	ft_putstr_fd(str, 1);
-	ft_putstr_fd(": invalid parameter name\n", 1);
+	ft_putstr_fd(": not a valid identifier\n", 1);
+}
+
+static int schecker(char *var)
+{
+	int		tmp;
+	int		i;
+
+	i = -1;
+	while (var[++i] && var[i] != '=')
+	{
+		tmp = ft_isalnum(var[i]);
+		if (tmp == 0 && var[i] != '_')
+			return (1);
+	}
+	return (0);
 }
 
 int			ft_unset(char **var, t_list *env_var)
@@ -43,7 +58,7 @@ int			ft_unset(char **var, t_list *env_var)
 	start = env_var;
 	while (var[i])
 	{
-		if (ft_strchr(var[i], '='))
+		if ((ft_strchr(var[i], '=') || (ft_isdigit(var[i][0])) || schecker(var[i])))
 		{
 			unset_err(var[i]);
 			fl = 1;
