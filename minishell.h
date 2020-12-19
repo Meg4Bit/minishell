@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 22:57:55 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/18 23:00:52 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_minishell
 
 void			command_line(char *line, t_minishell *minishell);
 char			**exe_parser(char *str);
+int				syntax_checker(char *line);
 int				error_msg(char *msg);
 int				free_str(char **tmp);
 void			skip_quotes(char *line, int *i);

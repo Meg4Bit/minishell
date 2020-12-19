@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/16 16:39:40 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/18 23:01:18 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ void		skip_quotes(char *line, int *i)
 	if (line[*i] == '\'')
 		while (line[++*i] != '\'' && line[*i])
 			;
-}
-
-int			syntax_checker(char *line)
-{
-	line += 1;
-	return (1);
 }
 
 t_list		*list_parser(char *line, t_list *commands)
