@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 02:35:15 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 02:40:59 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ static int	argv_setup(char ***argv, char ***redirect, t_list *cl,\
 	*argv = tmp;
 	if (!change_argv(*argv, minishell) || !change_argv(*redirect, minishell))
 		return (free_arr(*argv) + free_arr(*redirect));
-	if (!(tmp = copy_arr(*argv)))
-		return (free_arr(*argv) + free_arr(*redirect));
-	free(*argv);
-	*argv = tmp;
 	return (1);
 }
 
@@ -56,7 +52,7 @@ static int	open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-static int	execution(char **argv, t_minishell *minishell)
+int	execution(char **argv, t_minishell *minishell)
 {
 	int		flag;
 	char	*name_prog;
@@ -90,23 +86,27 @@ static int	command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 	char	**argv;
 	char	**redirect;
 	int		pip[2];
-	int		flag;
 
 	redirect = NULL;
 	if (!argv_setup(&argv, &redirect, *cl, minishell))
 		return (error_msg("malloc error"));
-	flag = open_fd(*cl, redirect, fd, pip);
+	minishell->flag[0] = open_fd(*cl, redirect, fd, pip);
+	if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
+		minishell->flag[1] = 1;
 	free_arr(redirect);
-	if (argv[0] && flag)
-		execution(argv, minishell);
+	if (!ft_exec(argv, minishell, minishell->flag, (*cl)->next))
+		return (0);
 	close_fd(fd, fd_init);
 	free_arr(argv);
 	if ((*cl)->next)
 	{
 		(*cl) = (*cl)->next;
-		if (*(char *)((*cl)->content) == '|')
-			fd[0] = pip[0];
+		fd[0] = *(char *)((*cl)->content) == '|' ? pip[0] : fd[0];
+		minishell->flag[1] = *(char *)((*cl)->content) == '|' ? 1 : 0;
 	}
+	if (*(char *)((*cl)->content) != '|')
+		while (wait(NULL) > 0)
+			;
 	(*cl) = (*cl)->next;
 	return (1);
 }
@@ -114,13 +114,18 @@ static int	command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 void		command_line(char *line, t_minishell *minishell)
 {
 	t_list	*cl;
+	char	*copy;
 	int		fd_init[2];
 
 	fd_init[1] = dup(minishell->fd[1]);
 	fd_init[0] = dup(minishell->fd[0]);
 	minishell->fd_init = fd_init;
-	cl = list_parser(line, NULL);
+	if (!(copy = ft_strtrim_mod(line, ' ')))
+		ft_exit(NULL, minishell);
+	cl = list_parser(copy, NULL);
+	free(copy);
 	minishell->cl = cl;
+	minishell->flag[1] = 0;
 	while (cl && *(char *)(cl->content))
 	{
 		if (!command_exec(&cl, minishell, minishell->fd, minishell->fd_init))

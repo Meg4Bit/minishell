@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 22:05:13 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/19 14:35:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 02:41:41 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,36 @@ int			ft_execve(char **argv, char **name_prog, t_minishell *minishell)
 	else
 		minishell->q_mark += 128;
 	free_str(name_prog);
+	return (1);
+}
+
+int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = 0;
+	signal(SIGQUIT, child_slash_handler);
+	signal(SIGINT, child_c_handler);
+	if (flag[1])
+		if ((pid = fork()) == -1)
+			return (error_msg(""));
+	if (pid == 0)
+	{
+		if (argv[0] && flag[0])
+			execution(argv, minishell);
+		else
+			minishell->q_mark = flag[0] ? 0 : 1;
+		if (flag[1])
+			exit(minishell->q_mark);
+	}
+	if (flag[1] && (!cl || *(char *)(cl->content) != '|'))
+	{
+		waitpid(pid, &status, 0);
+		if (!(minishell->q_mark = WTERMSIG(status)))
+			minishell->q_mark = WEXITSTATUS(status);
+		else
+			minishell->q_mark += 128;
+	}
 	return (1);
 }

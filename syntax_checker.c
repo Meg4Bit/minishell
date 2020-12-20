@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 23:01:11 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/18 23:28:33 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 14:05:51 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 
 int			syntax_checker(char *line)
 {
-	while (*line)
+	int		i;
+
+	i = 0;
+	while (line[i])
 	{
-		line += 1;
+		while (line[i] == ' ')
+			i++;
+		if (line[i] != '|' && line[i] != ';' && line[i] != '<' && line[i] != '>')
+			i++;
+		skip_quotes(line, &i);
+		if (line[i] == '\\')
+			i++;
+		i += line[i] ? 1 : 0;
 	}
 	return (1);
 }

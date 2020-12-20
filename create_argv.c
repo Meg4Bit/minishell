@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:31:25 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 03:08:45 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 16:02:21 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,11 @@ char		**exe_parser(char *str, t_minishell *minishell)
 	char	*copy;
 	int		flag;
 
-	if (!(str = ft_strtrim_mod(str, ' ')))
-		return (NULL);
 	if (!(copy = str_env(str, minishell)))
 		return ((char **)((long)free_str(&str)));
-	free(str);
-	str = copy;
+	if (!(str = ft_strtrim_mod(copy, ' ')))
+		return (NULL);
+	free(copy);
 	if (!(argv = (char **)malloc(sizeof(char *) * (argv_len(str) + 1))))
 		return ((char **)((long)free_str(&str)));
 	flag = (*str == '<' || *str == '>') ? 0 : 1;

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 02:34:27 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 02:33:08 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_minishell
 	int			*fd_init;
 	t_list		*cl;
 	char		*line;
+	int			flag[2];
 }				t_minishell;
 
 void			command_line(char *line, t_minishell *minishell);
@@ -90,5 +91,7 @@ int				name_setup(char **argv, char **name_prog,\
 int				open_redirect(char **redirect, int *fd);
 int				ft_execve(char **argv, char **name_prog,\
 												t_minishell *minishell);
+int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl);
+int	execution(char **argv, t_minishell *minishell);
 
 #endif

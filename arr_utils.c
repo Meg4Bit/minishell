@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 18:59:56 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/19 14:48:49 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 16:21:34 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,12 @@ char		**copy_arr(char **arr)
 
 	if (!arr)
 		return (0);
-	len = 0;
-	start = arr;
-	while (*start)
-		if (**start++)
-			len++;
+	len = ft_arrlen(arr);
 	if (!(new_arr = (char **)malloc(sizeof(char *) * (len + 1))))
 		return (0);
 	start = new_arr;
 	while (*arr)
-	{
-		if (**arr)
-			*new_arr++ = *arr++;
-		else
-			arr++;
-	}
+		*new_arr++ = *arr++;
 	*new_arr = NULL;
 	return (start);
 }
