@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/19 14:32:38 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:35:15 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	argv_setup(char ***argv, char ***redirect, t_list *cl,\
 {
 	char	**tmp;
 
-	if (!(*argv = exe_parser((char *)cl->content)))
+	if (!(*argv = exe_parser((char *)cl->content, minishell)))
 		return (0);
 	sort_argv(*argv);
 	tmp = *argv;

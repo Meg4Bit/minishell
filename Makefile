@@ -22,7 +22,8 @@ SRC =   main.c\
 		create_argv.c\
 		arr_utils.c\
 		cl_utils.c\
-		syntax_checker.c
+		syntax_checker.c\
+		str_env.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/19 12:56:47 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:34:27 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ typedef struct	s_minishell
 }				t_minishell;
 
 void			command_line(char *line, t_minishell *minishell);
-char			**exe_parser(char *str);
+char			**exe_parser(char *str, t_minishell *minishell);
+char			*str_env(char *str, t_minishell *minishell);
 int				syntax_checker(char *line);
 int				error_msg(char *msg);
 int				free_str(char **tmp);
@@ -81,7 +82,6 @@ int				question_env(char **main_str, char **argv, char **start,\
 																int q_mark);
 int				copy_set(char **main_str, char *argv, char *start);
 char			*get_exedir(char *exe, t_minishell *minishell);
-char			**exe_parser(char *str);
 char			**copy_arr(char **arr);
 void			sort_argv(char **arr);
 int				close_fd(int *fd, int *fd_init);
