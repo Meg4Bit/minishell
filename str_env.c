@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 02:38:04 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 03:15:29 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:10:10 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ char		*str_env(char *str, t_minishell *minishell)
 	while (*str)
 	{
 		i = 0;
-		if (str[i] == '\\')
-			i += str[i + 1] ? 2 : 1;
+		if (*str == '\\')
+			str += *(str + 1) ? 2 : 1;
 		skip_quotes(str, &i);
 		if (*(str += i) == '$')
 		{
@@ -106,7 +106,7 @@ char		*str_env(char *str, t_minishell *minishell)
 				return ((char *)((long)free_str(&main_str)));
 		}
 		else
-			str += str ? 1 : 0;
+			str += *str ? 1 : 0;
 	}
 	if (!(str = ft_strjoin(main_str, start)))
 		return ((char *)((long)free_str(&main_str)));
