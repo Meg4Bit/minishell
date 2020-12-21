@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 02:33:08 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:20:14 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int				ft_execve(char **argv, char **name_prog,\
 												t_minishell *minishell);
 int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl);
 int	execution(char **argv, t_minishell *minishell);
+void		free_minishell(t_minishell *minishell);
 
 #endif

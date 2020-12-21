@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 01:00:59 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:29:11 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		skip_quotes(char *line, int *i)
 		while (line[++*i] != '"' && line[*i])
 		{
 			if (line[*i] == '\\')
-				*i += line[*i + 1] ? 2 : 1;
+				*i += line[*i + 1] ? 1 : 0;
 		}
 	if (line[*i] == '\'')
 		while (line[++*i] != '\'' && line[*i])

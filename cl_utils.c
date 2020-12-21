@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 22:05:13 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 02:41:41 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:19:54 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,11 @@ int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl)
 		else
 			minishell->q_mark = flag[0] ? 0 : 1;
 		if (flag[1])
+		{
+			free_arr(argv);
+			free_minishell(minishell);
 			exit(minishell->q_mark);
+		}
 	}
 	if (flag[1] && (!cl || *(char *)(cl->content) != '|'))
 	{
