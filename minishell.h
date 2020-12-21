@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 10:57:24 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 18:20:14 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 21:49:34 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct	s_minishell
 void			command_line(char *line, t_minishell *minishell);
 char			**exe_parser(char *str, t_minishell *minishell);
 char			*str_env(char *str, t_minishell *minishell);
-int				syntax_checker(char *line);
+int				syntax_checker(char *line, int i);
 int				error_msg(char *msg);
 int				free_str(char **tmp);
 void			skip_quotes(char *line, int *i);
@@ -89,10 +89,12 @@ int				close_fd(int *fd, int *fd_init);
 int				name_setup(char **argv, char **name_prog,\
 												t_minishell *minishell);
 int				open_redirect(char **redirect, int *fd);
-int				ft_execve(char **argv, char **name_prog,\
-												t_minishell *minishell);
-int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl);
-int	execution(char **argv, t_minishell *minishell);
-void		free_minishell(t_minishell *minishell);
+int				execution(char **argv, t_minishell *minishell);
+void			free_minishell(t_minishell *minishell);
+void			wait_all(char ch);
+void			wait_last(t_minishell *minishell, t_list *cl, pid_t pid,\
+																int flag);
+void			free_execve(char **argv, char **name_prog,\
+											t_minishell *minishell, char **env);
 
 #endif

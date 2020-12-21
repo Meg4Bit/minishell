@@ -6,22 +6,11 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 22:05:13 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 18:19:54 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 20:14:24 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int			close_fd(int *fd, int *fd_init)
-{
-	if (fd[0] != 0)
-		close(fd[0]);
-	if (fd[1] != 1)
-		close(fd[1]);
-	fd[0] = dup2(fd_init[0], 0);
-	fd[1] = dup2(fd_init[1], 1);
-	return (0);
-}
 
 int			name_setup(char **argv, char **name_prog, t_minishell *minishell)
 {
@@ -99,7 +88,7 @@ int			open_redirect(char **redirect, int *fd)
 	return (1);
 }
 
-int			ft_execve(char **argv, char **name_prog, t_minishell *minishell)
+static int	ft_execve(char **argv, char **name_prog, t_minishell *minishell)
 {
 	int		status;
 	char	**env_var;
@@ -116,7 +105,7 @@ int			ft_execve(char **argv, char **name_prog, t_minishell *minishell)
 	if (pid == 0)
 	{
 		if (execve(*name_prog, argv, env_var) == -1)
-			exit(127 + error_msg(*name_prog));
+			free_execve(argv, name_prog, minishell, env_var);
 	}
 	free(env_var);
 	if (!(minishell->q_mark = WTERMSIG(status)))
@@ -127,37 +116,30 @@ int			ft_execve(char **argv, char **name_prog, t_minishell *minishell)
 	return (1);
 }
 
-int			ft_exec(char **argv, t_minishell *minishell, int *flag, t_list *cl)
+int			execution(char **argv, t_minishell *minishell)
 {
-	pid_t	pid;
-	int		status;
+	int		flag;
+	char	*name_prog;
 
-	pid = 0;
-	signal(SIGQUIT, child_slash_handler);
-	signal(SIGINT, child_c_handler);
-	if (flag[1])
-		if ((pid = fork()) == -1)
-			return (error_msg(""));
-	if (pid == 0)
+	if (!(flag = name_setup(argv, &name_prog, minishell)))
+		ft_exit(argv, minishell);
+	else if (flag == 1)
 	{
-		if (argv[0] && flag[0])
-			execution(argv, minishell);
-		else
-			minishell->q_mark = flag[0] ? 0 : 1;
-		if (flag[1])
+		if (func_checker(argv, minishell, 0))
 		{
-			free_arr(argv);
-			free_minishell(minishell);
-			exit(minishell->q_mark);
+			free_str(&name_prog);
+			if (!(func_checker(argv, minishell, 1)))
+				return ((minishell->q_mark = 1));
+			minishell->q_mark = 0;
 		}
-	}
-	if (flag[1] && (!cl || *(char *)(cl->content) != '|'))
-	{
-		waitpid(pid, &status, 0);
-		if (!(minishell->q_mark = WTERMSIG(status)))
-			minishell->q_mark = WEXITSTATUS(status);
 		else
-			minishell->q_mark += 128;
+		{
+			if (!ft_execve(argv, &name_prog, minishell))
+			{
+				free_str(&name_prog);
+				ft_exit(argv, minishell);
+			}
+		}
 	}
 	return (1);
 }

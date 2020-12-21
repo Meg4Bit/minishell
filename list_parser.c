@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 17:36:43 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 18:29:11 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 21:49:50 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_list		*list_parser(char *line, t_list *commands)
 
 	start = line;
 	i = 0;
-	if (!syntax_checker(line))
+	if (!syntax_checker(line, 0))
 		return (0);
 	while (line[i])
 	{

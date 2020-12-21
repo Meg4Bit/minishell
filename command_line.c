@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:39:12 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 18:05:36 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:55:42 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,31 @@ static int	open_fd(t_list *cl, char **redirect, int *fd, int *pip)
 	return (1);
 }
 
-int	execution(char **argv, t_minishell *minishell)
+static int	prog_exec(char **argv, t_minishell *minishell, int *flag,\
+															t_list *cl)
 {
-	int		flag;
-	char	*name_prog;
+	pid_t	pid;
 
-	if (!(flag = name_setup(argv, &name_prog, minishell)))
-		ft_exit(argv, minishell);
-	else if (flag == 1)
+	pid = 0;
+	signal(SIGQUIT, child_slash_handler);
+	signal(SIGINT, child_c_handler);
+	if (flag[1])
+		if ((pid = fork()) == -1)
+			return (error_msg(""));
+	if (pid == 0)
 	{
-		if (func_checker(argv, minishell, 0))
-		{
-			free_str(&name_prog);
-			if (!(func_checker(argv, minishell, 1)))
-				return ((minishell->q_mark = 1));
-			minishell->q_mark = 0;
-		}
+		if (argv[0] && flag[0])
+			execution(argv, minishell);
 		else
+			minishell->q_mark = flag[0] ? 0 : 1;
+		if (flag[1])
 		{
-			if (!ft_execve(argv, &name_prog, minishell))
-			{
-				free_str(&name_prog);
-				ft_exit(argv, minishell);
-			}
+			free_arr(argv);
+			free_minishell(minishell);
+			exit(minishell->q_mark);
 		}
 	}
+	wait_last(minishell, cl, pid, flag[1]);
 	return (1);
 }
 
@@ -94,7 +94,7 @@ static int	command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 	if ((*cl)->next && *(char *)((*cl)->next->content) == '|')
 		minishell->flag[1] = 1;
 	free_arr(redirect);
-	if (!ft_exec(argv, minishell, minishell->flag, (*cl)->next))
+	if (!prog_exec(argv, minishell, minishell->flag, (*cl)->next))
 		return (0);
 	close_fd(fd, fd_init);
 	free_arr(argv);
@@ -104,9 +104,7 @@ static int	command_exec(t_list **cl, t_minishell *minishell, int *fd,\
 		fd[0] = *(char *)((*cl)->content) == '|' ? pip[0] : fd[0];
 		minishell->flag[1] = *(char *)((*cl)->content) == '|' ? 1 : 0;
 	}
-	if (*(char *)((*cl)->content) != '|')
-		while (wait(NULL) > 0)
-			;
+	wait_all(*(char *)((*cl)->content));
 	(*cl) = (*cl)->next;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:31:25 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/20 16:02:21 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:51:07 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static int	create_arr(char **argv, char *str, int j, int flag)
 		i += (str[i] && str[i] != '>' && str[i] != '<'\
 									&& str[i] != '\\') ? 1 : 0;
 	}
-	if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
-		return (0);
+	if (*str)
+		if (!(argv[j++] = ft_substr(start, 0, &str[i] - start)))
+			return (0);
 	argv[j] = NULL;
 	return (1);
 }
