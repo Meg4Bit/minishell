@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/22 04:58:28 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/22 05:26:33 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,8 @@ static int	pwd_change(char *path, t_list *env_var)
 	char	*pwd_old;
 	int		i;
 
-	if (!(pwd_old = var_get("OLDPWD", env_var)))
-	{
-		if (!(pwd_old = var_get("PWD", env_var)))
-			pwd_old = var_get("HOME", env_var);
-	}
+	if (!(pwd_old = var_get("PWD", env_var)))
+		pwd_old = var_get("HOME", env_var);
 	i = chdir(path);
 	if (i == -1)
 		return (ft_cderr(path));
