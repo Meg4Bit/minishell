@@ -6,7 +6,7 @@
 /*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:31:58 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/19 13:28:23 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/22 05:26:33 by tcarlena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,21 @@ static char	*path_checker(char *path, t_list *env_var)
 
 	str = NULL;
 	if (path && path[0] == '-')
+	{
 		str = var_copy("OLDPWD", env_var);
+		if (!str || *str == '\0')
+		{
+			errno = 0;
+			return ((char *)((long)error_msg("cd: OLDPWD not set")));
+		}
+		ft_putendl_fd(str, 1);
+	}
 	if (!path || path[0] == '~' || path[0] == '\0' || !str)
-		str = var_copy("HOME", env_var);
-	if (!str)
-		return ((char *)((long)error_msg("cd: HOME not set")));
+		if (!(str = var_copy("HOME", env_var)))
+		{
+			errno = 0;
+			return ((char *)((long)error_msg("cd: HOME not set")));
+		}
 	return (str);
 }
 
@@ -34,8 +44,7 @@ static char	*path_get(char *path, t_list *env_var)
 		str = path_checker(path, env_var);
 	else
 	{
-		str = ft_strdup(path);
-		if (!str)
+		if (!(str = ft_strdup(path)))
 			exit(1);
 	}
 	return (str);
@@ -58,7 +67,8 @@ static int	pwd_change(char *path, t_list *env_var)
 	char	*pwd_old;
 	int		i;
 
-	pwd_old = var_get("PWD", env_var);
+	if (!(pwd_old = var_get("PWD", env_var)))
+		pwd_old = var_get("HOME", env_var);
 	i = chdir(path);
 	if (i == -1)
 		return (ft_cderr(path));
@@ -80,10 +90,14 @@ int			ft_cd(char **var, t_list *env_var)
 
 	len = ft_arrlen(var);
 	if (len > 2)
+	{
+		errno = 0;
 		return (error_msg("cd: too many arguments"));
+	}
 	else
 	{
-		path = path_get(var[1], env_var);
+		if (!(path = path_get(var[1], env_var)))
+			return (0);
 		if (path)
 		{
 			if (!pwd_change(path, env_var))
