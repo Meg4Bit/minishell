@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:40:21 by ametapod          #+#    #+#             */
-/*   Updated: 2020/12/21 20:13:51 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/22 12:49:41 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ int			close_fd(int *fd, int *fd_init)
 void		free_execve(char **argv, char **name_prog, t_minishell *minishell,\
 														char **env)
 {
+	minishell->q_mark = errno == ENOENT ? 127 : 126;
 	error_msg(*name_prog);
 	free_arr(argv);
 	free_str(name_prog);
 	free(env);
 	free_minishell(minishell);
-	exit(127);
+	exit(minishell->q_mark);
 }

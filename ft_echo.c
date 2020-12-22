@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:01:38 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/14 00:32:31 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/22 12:22:36 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	arg_checker(char **line)
 	while (line[++i])
 	{
 		j = 0;
-		if (line[i][j++] == '-')
+		if (line[i][j++] == '-' && line[i][j] == 'n')
 		{
 			while (line[i][j] == 'n')
 				j++;
