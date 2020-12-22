@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcarlena <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 00:40:22 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/19 03:46:21 by tcarlena         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:33:30 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ void		ft_stderr(char *func, char *arg, char *err)
 void		ft_set(char *key, char *value, t_list *env_var)
 {
 	t_list	*list;
+	char	*tmp;
 
+	if ((tmp = ft_strchr(key, '=')))
+		*tmp = '\0';
 	list = ft_lstfind(env_var, key, &var_checker);
+	if (tmp)
+		*tmp = '=';
 	if (!list)
 		var_add(key, value, env_var);
 	else

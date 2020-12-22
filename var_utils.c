@@ -6,7 +6,7 @@
 /*   By: ametapod <pe4enko111@rambler.ru>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 01:16:53 by tcarlena          #+#    #+#             */
-/*   Updated: 2020/12/22 17:50:37 by ametapod         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:36:42 by ametapod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,17 @@ char		*var_copy(char *key, t_list *env_var)
 int			var_checker(char *s1, char *s2)
 {
 	int		i;
+	int		l;
 	char	*tmp;
 
 	i = 0;
 	if (!s2[i])
 		return (1);
-	if (!ft_strchr(s2, '='))
-	{
-		if (!ft_strcmp(s2, s1))
-			return (0);
-	}
-	else if (ft_strchr(s2, '='))
-	{
-		if (!(tmp = ft_substr(s1, 0, ft_strchr(s1, '=') - s1)))
-			return (0);
-		if (!ft_strcmp(s1, tmp))
-			return (free_str(&tmp));
-		free(tmp);
-	}
+	l = ft_strchr(s1, '=') ? (size_t)(ft_strchr(s1, '=') - s1) : ft_strlen(s1);
+	if (!(tmp = ft_substr(s1, 0, l)))
+		return (0);
+	if (!ft_strcmp(s2, tmp))
+		return (free_str(&tmp));
+	free(tmp);
 	return (1);
 }
